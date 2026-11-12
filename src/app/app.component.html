@@ -1,0 +1,15 @@
+<a href="#contenido" class="skip-link">saltar al contenido</a>
+
+<app-ambient-background />
+
+<div class="relative z-10 flex min-h-screen flex-col pb-16 lg:pb-0">
+  <app-top-bar class="sticky top-0 z-30 block" />
+
+  <main id="contenido" class="flex min-w-0 flex-1 flex-col" tabindex="-1">
+    <router-outlet />
+  </main>
+
+  <app-status-bar class="mt-auto block" />
+
+  <app-mobile-nav />
+</div>

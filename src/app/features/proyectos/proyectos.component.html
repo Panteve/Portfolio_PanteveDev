@@ -1,0 +1,79 @@
+<section class="flex flex-col" aria-labelledby="proyectos-titulo">
+  <h1 id="proyectos-titulo" class="sr-only">Proyectos</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[212px_minmax(0,1fr)]">
+    <!-- Filtros de escritorio -->
+    <aside class="hidden border-r border-line lg:block" aria-labelledby="filtros-titulo">
+      <div class="border-b border-line px-4 py-2.5">
+        <h2 id="filtros-titulo" class="label-caps">proyectos</h2>
+      </div>
+
+      <div class="p-3">
+        <app-tech-filters
+          [technologies]="technologies"
+          [active]="activeNames()"
+          (toggle)="toggleTechnology($event)"
+          (clear)="clearFilters()"
+        />
+      </div>
+    </aside>
+
+    <div class="min-w-0">
+      <!-- Filtros en desplegable (móvil) -->
+      <details class="group border-b border-line lg:hidden">
+        <summary
+          class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[11px] text-ink"
+        >
+          <span class="truncate">
+            <span class="text-muted">filtros //</span>
+            <span class="text-accent">{{ filterLabel() }}</span>
+          </span>
+          <span
+            class="shrink-0 text-[9px] text-muted transition-transform duration-150 group-open:rotate-90"
+            aria-hidden="true"
+            >▸</span
+          >
+        </summary>
+
+        <div class="px-3 pb-4">
+          <app-tech-filters
+            [technologies]="technologies"
+            [active]="activeNames()"
+            (toggle)="toggleTechnology($event)"
+            (clear)="clearFilters()"
+          />
+        </div>
+      </details>
+
+      <!-- Barra de pestaña del editor -->
+      <div
+        class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-surface-2 px-4 py-2"
+      >
+        <p class="min-w-0 truncate text-[11px]">
+          <span class="text-accent">filtro</span>
+          <span class="text-muted"> // </span>
+          <span class="text-ink">{{ filterLabel() }}</span>
+        </p>
+        <p class="shrink-0 text-[10px] text-muted">{{ resultsLabel() }}</p>
+      </div>
+
+      <div class="p-4 sm:p-5">
+        <h2 class="sr-only">Proyectos filtrados</h2>
+        @if (filteredProjects().length) {
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            @for (project of filteredProjects(); track project.id) {
+              <app-project-card [project]="project" [index]="projectIndex(project)" />
+            }
+          </div>
+        } @else {
+          <div class="rounded-md border border-dashed border-line px-6 py-16 text-center">
+            <p class="text-[11px] text-muted">// ningún proyecto coincide con los filtros</p>
+            <button type="button" class="btn btn-ghost mt-3" (click)="clearFilters()">
+              limpiar-filtros
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

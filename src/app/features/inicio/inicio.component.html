@@ -1,0 +1,59 @@
+<section
+  class="mx-auto grid w-full max-w-[1200px] flex-1 grid-cols-1 gap-8 p-5 sm:p-8 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-12 lg:px-10 lg:py-12"
+  aria-labelledby="inicio-titulo"
+>
+  <div class="min-w-0">
+    <p class="text-[11px] text-muted">// hola-mundo</p>
+
+    <p class="mt-6 text-xs text-muted">Hola. Soy</p>
+    <h1
+      id="inicio-titulo"
+      class="mt-2 text-[44px] font-bold leading-none tracking-[-0.04em] text-white sm:text-6xl"
+    >
+      {{ profile.firstName }}<span class="caret text-accent" aria-hidden="true">_</span>
+    </h1>
+
+    <p class="mt-4 text-sm text-accent-2 sm:text-base">
+      <span class="text-muted" aria-hidden="true">&gt;</span> {{ profile.role }}
+    </p>
+    <p class="mt-1 text-xs text-muted">{{ profile.city }}</p>
+
+    <div
+      class="mt-8 max-w-[440px] rounded-md border border-line bg-bg/70 px-4 py-3 text-[11px] leading-6 sm:text-[12px] sm:leading-7"
+    >
+      <p class="tok-comment">// completa el juego para continuar</p>
+      <p class="tok-comment">// encuentra mi perfil en GitHub:</p>
+      <p class="break-all">
+        <span class="tok-keyword">const</span>
+        <span class="tok-plain"> githubUrl = </span>
+        <a
+          [href]="profile.githubUrl"
+          target="_blank"
+          rel="noreferrer"
+          class="tok-string underline decoration-pink/60 underline-offset-4 transition-colors hover:decoration-pink"
+          >"{{ profile.githubUrl }}"</a
+        ><span class="tok-plain">;</span>
+      </p>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      <a routerLink="/proyectos" class="btn btn-accent">
+        ver-proyectos <span aria-hidden="true">→</span>
+      </a>
+      <a routerLink="/contacto" class="btn btn-ghost">contacto</a>
+    </div>
+
+    <div class="mt-8 border-t border-line pt-4">
+      <p class="label-caps">stack</p>
+      <ul class="mt-2 flex flex-wrap gap-1.5">
+        @for (technology of stack; track technology) {
+          <li class="chip">{{ technology }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="min-w-0">
+    <app-aim-game />
+  </div>
+</section>

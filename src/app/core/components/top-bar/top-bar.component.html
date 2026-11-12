@@ -1,0 +1,35 @@
+<div
+  class="flex h-12 items-stretch justify-between gap-2 border-b border-line bg-surface"
+>
+  <div class="flex min-w-0 items-center gap-3 px-4">
+    <a
+      routerLink="/"
+      class="flex min-w-0 items-center gap-1 truncate text-xs transition-colors duration-150 hover:text-white"
+    >
+      <span class="sr-only">Ir al inicio: </span>
+      <span class="text-muted" aria-hidden="true">~/</span>
+      <span class="truncate text-ink">{{ profile.handle }}</span>
+      <span class="text-accent" aria-hidden="true">$</span>
+    </a>
+  </div>
+
+  <nav class="hidden items-stretch lg:flex" role="tablist" aria-label="Secciones del portfolio">
+    @for (tab of tabs; track tab.path) {
+      <a
+        [routerLink]="tab.path"
+        routerLinkActive="tab-link-active"
+        #rla="routerLinkActive"
+        [routerLinkActiveOptions]="{ exact: !!tab.exact }"
+        role="tab"
+        [attr.aria-selected]="rla.isActive"
+        class="tab-link"
+      >
+        {{ tab.label }}
+      </a>
+    }
+  </nav>
+
+  <div class="flex items-center px-4 lg:hidden">
+    <span class="text-[10px] uppercase tracking-[0.2em] text-muted">{{ profile.city }}</span>
+  </div>
+</div>

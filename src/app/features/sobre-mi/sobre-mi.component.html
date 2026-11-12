@@ -1,0 +1,167 @@
+<section class="flex flex-col" aria-labelledby="sobre-mi-titulo">
+  <h1 id="sobre-mi-titulo" class="sr-only">Sobre mí</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[212px_minmax(0,1fr)_300px]">
+    <!-- Explorador de escritorio -->
+    <aside class="hidden border-r border-line lg:block" aria-labelledby="explorador-titulo">
+      <div class="border-b border-line px-4 py-2.5">
+        <h2 id="explorador-titulo" class="label-caps">explorador</h2>
+      </div>
+
+      <div class="p-3">
+        <p class="mb-2 truncate text-[10px] uppercase tracking-[0.16em] text-muted">
+          ~/portfolio/src
+        </p>
+
+        <ul
+          role="tree"
+          aria-label="Archivos de sobre mí"
+          class="space-y-0.5"
+          (keydown)="onTreeKeydown($event)"
+        >
+          @for (folder of folders; track folder.id) {
+            <li role="none">
+              <button
+                type="button"
+                role="treeitem"
+                [attr.aria-expanded]="isOpen(folder.id)"
+                [attr.data-folder]="folder.id"
+                class="flex w-full items-center gap-1.5 rounded px-2 py-1.5 text-left text-[11px] text-ink transition-colors duration-150 hover:bg-white/5"
+                (click)="toggleFolder(folder.id)"
+              >
+                <app-explorer-icon name="chevron" [open]="isOpen(folder.id)" [size]="12" class="text-muted" />
+                <app-explorer-icon
+                  [name]="isOpen(folder.id) ? 'folder-open' : 'folder'"
+                  [color]="folderColor(folder.id)"
+                  [size]="16"
+                />
+                <span class="truncate">{{ folder.label }}</span>
+              </button>
+
+              @if (isOpen(folder.id)) {
+                <ul role="group" class="ml-[15px] border-l border-line pl-2">
+                  @for (file of folder.files; track file.id) {
+                    <li role="none">
+                      <button
+                        type="button"
+                        role="treeitem"
+                        [attr.aria-selected]="selected().id === file.id"
+                        [class]="fileClass(file)"
+                        (click)="selectFile(file)"
+                      >
+                        <app-explorer-icon name="typescript" [size]="15" />
+                        <span class="truncate">{{ file.name }}</span>
+                      </button>
+                    </li>
+                  }
+                </ul>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="border-t border-line p-3">
+        <p class="label-caps">contacto</p>
+        <a
+          [href]="'mailto:' + profile.email"
+          class="mt-2 flex items-center gap-1.5 text-[11px] text-accent transition-colors hover:underline"
+        >
+          <app-icon name="mail" [size]="12" />
+          <span class="truncate">{{ profile.email }}</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Explorador en acordeón (móvil) -->
+    <div class="border-b border-line lg:hidden">
+      <div class="border-b border-line px-4 py-2.5">
+        <p class="label-caps">explorador</p>
+      </div>
+
+      <div class="divide-y divide-line">
+        @for (folder of folders; track folder.id) {
+          <details class="group" [open]="folder.id === 'bio'">
+            <summary
+              class="flex cursor-pointer list-none items-center gap-2 px-4 py-2.5 text-[11px] text-ink"
+            >
+              <span class="inline-flex transition-transform duration-150 group-open:rotate-90">
+                <app-explorer-icon name="chevron" [size]="12" class="text-muted" />
+              </span>
+              <span class="inline-flex group-open:hidden">
+                <app-explorer-icon name="folder" [color]="folderColor(folder.id)" [size]="16" />
+              </span>
+              <span class="hidden group-open:inline-flex">
+                <app-explorer-icon name="folder-open" [color]="folderColor(folder.id)" [size]="16" />
+              </span>
+              <span class="flex-1">{{ folder.label }}</span>
+              <span class="text-[10px] text-muted">{{ folder.files.length }}</span>
+            </summary>
+
+            <div class="pb-2 pl-8 pr-3">
+              @for (file of folder.files; track file.id) {
+                <button
+                  type="button"
+                  [class]="fileClass(file)"
+                  (click)="selectFile(file)"
+                >
+                  <app-explorer-icon name="typescript" [size]="15" />
+                  <span class="truncate">{{ file.name }}</span>
+                </button>
+              }
+            </div>
+          </details>
+        }
+      </div>
+
+      <div class="border-t border-line px-4 py-3">
+        <p class="label-caps">contacto</p>
+        <a
+          [href]="'mailto:' + profile.email"
+          class="mt-1 inline-flex items-center gap-1.5 text-[11px] text-accent hover:underline"
+        >
+          <app-icon name="mail" [size]="12" />
+          {{ profile.email }}
+        </a>
+      </div>
+    </div>
+
+    <!-- Editor -->
+    <div #editorPanel class="min-w-0 scroll-mt-4 border-line lg:border-r" id="editor">
+      <div class="flex items-center gap-2 overflow-x-auto border-b border-line bg-surface-2 px-3 py-2">
+        <div
+          class="flex shrink-0 items-center gap-2 rounded-t border border-b-0 border-line bg-surface px-3 py-1.5 text-[11px] text-white"
+        >
+          <app-explorer-icon name="typescript" [size]="15" />
+          {{ selected().name }}
+          <span class="text-muted" aria-hidden="true">×</span>
+        </div>
+        <span class="ml-auto shrink-0 text-[10px] text-muted">{{ lineCount() }} líneas</span>
+      </div>
+
+      <div class="max-h-[540px] overflow-auto bg-surface px-2 py-3">
+        <app-code-block [code]="selected().code" />
+      </div>
+
+      <div
+        class="flex items-center justify-between gap-2 border-t border-line bg-surface-2/50 px-4 py-1.5 text-[10px] text-muted"
+      >
+        <span class="truncate">// {{ selectedFolderLabel() }}/{{ selected().name }}</span>
+        <span class="shrink-0">TypeScript · UTF-8</span>
+      </div>
+    </div>
+
+    <!-- Snippets -->
+    <aside class="border-t border-line lg:border-t-0" aria-labelledby="snippets-titulo">
+      <div class="border-b border-line px-4 py-2.5">
+        <h2 id="snippets-titulo" class="text-[11px] text-muted">// snippets de código</h2>
+      </div>
+
+      <div class="flex flex-col gap-3 p-3">
+        @for (snippet of snippets; track snippet.id) {
+          <app-snippet-card [snippet]="snippet" />
+        }
+      </div>
+    </aside>
+  </div>
+</section>

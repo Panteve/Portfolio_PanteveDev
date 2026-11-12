@@ -1,0 +1,30 @@
+<footer
+  class="flex flex-col gap-2 border-t border-line bg-surface-2 px-4 py-3 text-[11px] text-muted sm:flex-row sm:items-center sm:justify-between"
+>
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+    <span class="text-ink/80">encuéntrame en:</span>
+    @for (link of socialLinks; track link.label) {
+      <a
+        [href]="link.url"
+        [attr.target]="link.external ? '_blank' : null"
+        [attr.rel]="link.external ? 'noreferrer' : null"
+        class="inline-flex items-center gap-1.5 text-ink transition-colors duration-150 hover:text-accent"
+        [attr.aria-label]="link.label"
+      >
+        <app-icon [name]="link.icon" [size]="13" />
+        <span>{{ link.label }}</span>
+      </a>
+    }
+  </div>
+
+  <div class="flex items-center gap-3 text-[10px] text-muted">
+    <span class="inline-flex items-center gap-1.5">
+      <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+      main
+    </span>
+    <span aria-hidden="true">·</span>
+    <span>UTF-8</span>
+    <span aria-hidden="true">·</span>
+    <span>{{ profile.city }}</span>
+  </div>
+</footer>

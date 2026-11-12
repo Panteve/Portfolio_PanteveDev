@@ -1,0 +1,160 @@
+<section
+  aria-labelledby="contacto-titulo"
+  class="grid grid-cols-1 lg:grid-cols-[248px_minmax(0,1fr)]"
+>
+  <h1 id="contacto-titulo" class="sr-only">Contacto</h1>
+
+  <aside class="border-b border-line p-4 sm:p-5 lg:border-b-0 lg:border-r">
+    <h2 class="label-caps">contactos</h2>
+
+    <ul class="mt-3 space-y-3 text-[11px]">
+      <li>
+        <p class="text-muted">correo</p>
+        <a
+          [href]="'mailto:' + profile.email"
+          class="mt-0.5 block break-all text-accent transition-colors hover:underline"
+        >
+          {{ profile.email }}
+        </a>
+      </li>
+      <li>
+        <p class="text-muted">ciudad</p>
+        <p class="mt-0.5 text-ink">{{ profile.city }}</p>
+      </li>
+    </ul>
+
+    <div class="mt-6 border-t border-line pt-4">
+      <p class="label-caps">encuéntrame-también-en</p>
+      <ul class="mt-3 space-y-2">
+        @for (link of socials; track link.label) {
+          <li>
+            <a
+              [href]="link.url"
+              [attr.target]="link.external ? '_blank' : null"
+              [attr.rel]="link.external ? 'noreferrer' : null"
+              class="inline-flex items-center gap-2 text-[11px] text-ink transition-colors duration-150 hover:text-accent"
+            >
+              <app-icon [name]="link.icon" [size]="14" />
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <p class="mt-6 text-[10px] leading-5 text-muted">
+      // sin backend por ahora: el formulario prepara el mensaje en tu cliente de correo.
+    </p>
+  </aside>
+
+  <div class="min-w-0">
+    <div class="flex items-center justify-between gap-2 border-b border-line bg-surface-2 px-4 py-2">
+      <p class="text-[11px] text-muted"><span class="text-accent">contacto</span>.ts</p>
+      <span class="text-[10px] text-muted">TypeScript · UTF-8</span>
+    </div>
+
+    <div class="p-5 sm:p-8">
+      <p class="text-[11px] text-muted">// escribe el mensaje y el formulario arma el correo</p>
+      <h2 class="mt-3 text-xl font-semibold text-white sm:text-2xl">Hablemos.</h2>
+      <p class="mt-2 max-w-lg text-xs leading-6 text-muted">
+        Cuéntame del proyecto, la práctica o la idea. Los campos con
+        <span class="text-muted">*</span> son obligatorios.
+      </p>
+
+      @if (sent()) {
+        <div class="mt-6 max-w-xl rounded-md border border-accent/30 bg-accent/5 p-4" role="status">
+          <p class="text-[11px] text-accent">// mensaje listo</p>
+          <p class="mt-2 text-sm leading-6 text-ink">
+            El correo quedó preparado. Ábrelo en tu cliente de correo para enviarlo.
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <a [href]="mailtoHref()" class="btn btn-accent">
+              abrir-correo <span aria-hidden="true">→</span>
+            </a>
+            <button type="button" class="btn btn-ghost" (click)="writeAnother()">
+              escribir-otro
+            </button>
+          </div>
+        </div>
+      }
+
+      <form class="mt-6 max-w-xl space-y-5" [formGroup]="form" (ngSubmit)="send()" novalidate>
+        <div>
+          <label for="campo-nombre" class="block text-[11px] text-muted">
+            <span class="text-accent">_</span>nombre <span class="text-muted/70">*</span>
+          </label>
+          <input
+            id="campo-nombre"
+            type="text"
+            formControlName="nombre"
+            autocomplete="name"
+            placeholder="tu nombre"
+            class="field mt-1.5"
+            [class.field-invalid]="showError('nombre')"
+            [attr.aria-invalid]="showError('nombre')"
+            [attr.aria-describedby]="showError('nombre') ? 'error-nombre' : null"
+          />
+          @if (showError('nombre')) {
+            <p id="error-nombre" class="mt-1.5 text-[10px] text-pink">
+              // mínimo 2 caracteres
+            </p>
+          }
+        </div>
+
+        <div>
+          <label for="campo-correo" class="block text-[11px] text-muted">
+            <span class="text-accent">_</span>correo <span class="text-muted/70">*</span>
+          </label>
+          <input
+            id="campo-correo"
+            type="email"
+            formControlName="correo"
+            autocomplete="email"
+            placeholder="tu@correo.com"
+            class="field mt-1.5"
+            [class.field-invalid]="showError('correo')"
+            [attr.aria-invalid]="showError('correo')"
+            [attr.aria-describedby]="showError('correo') ? 'error-correo' : null"
+          />
+          @if (showError('correo')) {
+            <p id="error-correo" class="mt-1.5 text-[10px] text-pink">
+              // escribe un correo válido
+            </p>
+          }
+        </div>
+
+        <div>
+          <label for="campo-mensaje" class="block text-[11px] text-muted">
+            <span class="text-accent">_</span>mensaje <span class="text-muted/70">*</span>
+          </label>
+          <textarea
+            id="campo-mensaje"
+            formControlName="mensaje"
+            rows="5"
+            placeholder="qué tienes en mente..."
+            class="field mt-1.5 resize-y"
+            [class.field-invalid]="showError('mensaje')"
+            [attr.aria-invalid]="showError('mensaje')"
+            [attr.aria-describedby]="showError('mensaje') ? 'error-mensaje' : null"
+          ></textarea>
+          @if (showError('mensaje')) {
+            <p id="error-mensaje" class="mt-1.5 text-[10px] text-pink">
+              // mínimo 10 caracteres
+            </p>
+          }
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+          <p class="text-[10px] text-muted">// el botón se activa cuando todo está bien</p>
+          <button
+            type="submit"
+            class="btn btn-accent disabled:cursor-not-allowed disabled:opacity-40"
+            [disabled]="form.invalid"
+          >
+            enviar-mensaje <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

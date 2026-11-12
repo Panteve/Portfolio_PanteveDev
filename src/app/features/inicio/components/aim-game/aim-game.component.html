@@ -1,0 +1,114 @@
+<section class="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface-2" aria-labelledby="juego-titulo">
+  <div class="flex items-center justify-between gap-3 border-b border-line px-3 py-2">
+    <div class="flex min-w-0 items-center gap-2">
+      <span class="flex items-center gap-1" aria-hidden="true">
+        <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+      </span>
+      <h2 id="juego-titulo" class="truncate text-[11px] text-ink">aim_trainer.gd</h2>
+    </div>
+    <span class="chip shrink-0">godot-4</span>
+  </div>
+
+  <div class="flex flex-1 flex-col sm:flex-row">
+    <div
+      class="aim-area relative min-h-[280px] flex-1 overflow-hidden"
+      [class.cursor-crosshair]="status() === 'playing'"
+      (click)="miss()"
+    >
+      @if (status() === 'playing') {
+        <button
+          type="button"
+          class="aim-target focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          [style.left.%]="target().x"
+          [style.top.%]="target().y"
+          [style.width.px]="target().size"
+          [style.height.px]="target().size"
+          (click)="hit($event)"
+          aria-label="Objetivo"
+        ></button>
+      }
+
+      @if (status() === 'idle') {
+        <div
+          class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-bg/85 p-6 text-center backdrop-blur-[2px]"
+          (click)="$event.stopPropagation()"
+        >
+          <p class="text-[10px] uppercase tracking-[0.24em] text-muted">// mini-juego</p>
+          <p class="text-lg font-semibold text-white">aim-trainer</p>
+          <p class="max-w-[230px] text-[11px] leading-5 text-muted">
+            20 objetivos. Cada fallo cuenta. El reloj corre desde el primer clic.
+          </p>
+          <button type="button" class="btn btn-warm mt-2" (click)="start()">
+            empezar-juego <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      }
+
+      @if (status() === 'finished') {
+        <div
+          class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-1 bg-bg/90 p-6 text-center backdrop-blur-[2px]"
+          (click)="$event.stopPropagation()"
+        >
+          <p class="text-[10px] uppercase tracking-[0.24em] text-accent">// ronda completada</p>
+          <p class="mt-1 text-3xl font-bold text-white">
+            {{ points() }}<span class="text-base text-muted">/{{ totalTargets }}</span>
+          </p>
+          <p class="text-[11px] text-muted">
+            {{ seconds() }}s · precisión {{ accuracy() }}%
+          </p>
+          <div class="mt-3 flex flex-wrap justify-center gap-2">
+            <button type="button" class="btn btn-warm" (click)="start()">otra-ronda</button>
+            <a routerLink="/sobre-mi" class="btn btn-ghost">siguiente →</a>
+          </div>
+        </div>
+      }
+    </div>
+
+    <aside
+      class="flex w-full flex-col gap-3 border-t border-line p-4 sm:w-[196px] sm:border-l sm:border-t-0"
+    >
+      <p class="text-[11px] leading-5 text-muted">// haz clic en los objetivos</p>
+
+      <dl class="space-y-1.5 text-[11px]">
+        <div class="flex items-center justify-between gap-2">
+          <dt class="text-muted">puntos</dt>
+          <dd class="text-white">{{ points() }}</dd>
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <dt class="text-muted">restantes</dt>
+          <dd class="text-white">{{ remaining() }}</dd>
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <dt class="text-muted">precisión</dt>
+          <dd class="text-white">{{ status() === 'idle' ? '—' : accuracy() + '%' }}</dd>
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <dt class="text-muted">tiempo</dt>
+          <dd class="text-white">{{ seconds() }}s</dd>
+        </div>
+      </dl>
+
+      <div class="h-1 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+        <div
+          class="h-full rounded-full bg-accent transition-[width] duration-150"
+          [style.width.%]="progress()"
+        ></div>
+      </div>
+
+      <p class="sr-only" aria-live="polite">
+        Puntos: {{ points() }}. Objetivos restantes: {{ remaining() }}.
+      </p>
+
+      <div class="mt-auto flex flex-col gap-2 pt-2">
+        <button type="button" class="btn btn-warm w-full" (click)="start()">
+          empezar-juego
+        </button>
+        <a routerLink="/sobre-mi" class="btn btn-ghost w-full">
+          saltar <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
