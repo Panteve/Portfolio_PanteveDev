@@ -20,7 +20,7 @@ export interface TerminalLine {
         <div class="flex min-w-0 flex-1 items-end gap-1 px-2 pt-1.5">
           <button
             type="button"
-            class="flex shrink-0 items-center gap-1.5 rounded-t border border-b-0 border-line bg-surface-0 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-white ring-1 ring-inset ring-accent/20 shadow-[0_0_18px_-10px_rgba(45,212,191,0.5)]"
+            class="flex shrink-0 items-center gap-1.5 rounded-t border border-b-0 border-line bg-surface-0 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-ink ring-1 ring-inset ring-accent/20 shadow-[0_0_18px_-10px_rgba(122,162,247,0.5)]"
             [attr.aria-expanded]="open()"
             aria-controls="terminal-output"
             (click)="toggle()"
@@ -91,6 +91,20 @@ export interface TerminalLine {
     }
 
     .terminal-panel {
+      /* El terminal conserva la paleta oscura en ambos temas. */
+      --surface-0: 22 22 30;
+      --surface: 26 27 38;
+      --surface-2: 36 40 59;
+      --border: 59 66 82;
+      --line-alpha: 0.85;
+      --text: 192 202 245;
+      --text-muted: 169 177 214;
+      --accent: 122 162 247;
+      --accent-2: 187 154 247;
+      --warm: 255 158 100;
+      --green: 158 206 106;
+      --error: 255 158 100;
+      color-scheme: dark;
       height: 184px;
       max-height: 184px;
       transition: max-height 220ms cubic-bezier(0.4, 0, 0.2, 1);

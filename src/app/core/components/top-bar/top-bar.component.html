@@ -4,7 +4,7 @@
   <div class="flex min-w-0 items-center gap-3 px-4">
     <a
       routerLink="/"
-      class="flex min-w-0 items-center gap-1 truncate text-xs transition-colors duration-150 hover:text-white"
+      class="flex min-w-0 items-center gap-1 truncate text-xs transition-colors duration-150 hover:text-ink"
     >
       <span class="sr-only">Ir al inicio: </span>
       <span class="text-muted" aria-hidden="true">~/</span>
@@ -13,21 +13,67 @@
     </a>
   </div>
 
-  <nav class="hidden items-stretch lg:flex" role="tablist" aria-label="Secciones del portfolio">
-    @for (tab of tabs; track tab.path) {
-      <a
-        [routerLink]="tab.path"
-        routerLinkActive="tab-link-active"
-        #rla="routerLinkActive"
-        [routerLinkActiveOptions]="{ exact: !!tab.exact }"
-        role="tab"
-        [attr.aria-selected]="rla.isActive"
-        class="tab-link"
-      >
-        {{ tab.label }}
-      </a>
-    }
-  </nav>
+  <div class="flex items-stretch">
+    <nav class="hidden items-stretch lg:flex" role="tablist" aria-label="Secciones del portfolio">
+      @for (tab of tabs; track tab.path) {
+        <a
+          [routerLink]="tab.path"
+          routerLinkActive="tab-link-active"
+          #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: !!tab.exact }"
+          role="tab"
+          [attr.aria-selected]="rla.isActive"
+          class="tab-link"
+        >
+          {{ tab.label }}
+        </a>
+      }
+    </nav>
+
+    <button
+      type="button"
+      class="focus-ring flex h-11 w-11 shrink-0 items-center justify-center self-center rounded-md border border-accent/50 bg-accent/20 text-ink transition-colors duration-150 hover:bg-accent/30"
+      [attr.aria-label]="
+        theme.isDark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+      "
+      [attr.title]="theme.isDark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+      (click)="theme.toggle()"
+    >
+      @if (theme.isDark()) {
+        <svg
+          class="text-accent"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"
+          />
+        </svg>
+      } @else {
+        <svg
+          class="text-accent"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z" />
+        </svg>
+      }
+    </button>
+  </div>
 
   <div class="flex items-center px-4 lg:hidden">
     <span class="text-[10px] uppercase tracking-[0.2em] text-muted">{{ profile.city }}</span>

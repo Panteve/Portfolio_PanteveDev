@@ -11,7 +11,7 @@
   overflow: hidden;
   pointer-events: none;
   isolation: isolate;
-  background-color: rgb(var(--surface));
+  background-color: rgb(var(--bg));
 }
 
 .glow {
@@ -22,8 +22,8 @@
   will-change: transform;
 }
 
-/* Teal: sigue al cursor. Violeta: siempre en el punto espejo del viewport. */
-.glow-teal {
+/* Azul: sigue al cursor. Violeta: siempre en el punto espejo del viewport. */
+.glow-blue {
   width: 78vmax;
   height: 78vmax;
   margin: -39vmax 0 0 -39vmax;

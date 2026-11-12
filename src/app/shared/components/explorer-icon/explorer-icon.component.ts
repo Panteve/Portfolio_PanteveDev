@@ -33,15 +33,15 @@ export type ExplorerIconName =
       }
       @case ('typescript') {
         <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
-          <rect width="16" height="16" rx="2.5" fill="#3178c6" />
+          <rect class="icon-typescript" width="16" height="16" rx="2.5" fill="currentColor" />
           <text
+            class="icon-glyph"
             x="8"
             y="11.7"
             text-anchor="middle"
             font-family="JetBrains Mono, ui-monospace, monospace"
             font-size="8.5"
             font-weight="800"
-            fill="#ffffff"
           >
             TS
           </text>
@@ -49,15 +49,15 @@ export type ExplorerIconName =
       }
       @case ('json') {
         <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
-          <rect width="16" height="16" rx="2.5" fill="#e8b339" />
+          <rect class="icon-json" width="16" height="16" rx="2.5" fill="currentColor" />
           <text
+            class="icon-glyph"
             x="8"
             y="11.4"
             text-anchor="middle"
             font-family="JetBrains Mono, ui-monospace, monospace"
             font-size="8"
             font-weight="800"
-            fill="#1b1b1b"
           >
             &#123;&#125;
           </text>
@@ -65,15 +65,15 @@ export type ExplorerIconName =
       }
       @case ('env') {
         <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
-          <rect width="16" height="16" rx="2.5" fill="#5aa469" />
+          <rect class="icon-env" width="16" height="16" rx="2.5" fill="currentColor" />
           <text
+            class="icon-glyph"
             x="8"
             y="10.9"
             text-anchor="middle"
             font-family="JetBrains Mono, ui-monospace, monospace"
             font-size="5.6"
             font-weight="800"
-            fill="#ffffff"
           >
             ENV
           </text>
@@ -81,15 +81,15 @@ export type ExplorerIconName =
       }
       @case ('markdown') {
         <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
-          <rect width="16" height="16" rx="2.5" fill="#519aba" />
+          <rect class="icon-markdown" width="16" height="16" rx="2.5" fill="currentColor" />
           <text
+            class="icon-glyph"
             x="8"
             y="11.2"
             text-anchor="middle"
             font-family="JetBrains Mono, ui-monospace, monospace"
             font-size="6.4"
             font-weight="800"
-            fill="#ffffff"
           >
             MD
           </text>
@@ -97,15 +97,15 @@ export type ExplorerIconName =
       }
       @case ('log') {
         <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
-          <rect width="16" height="16" rx="2.5" fill="#64748b" />
+          <rect class="icon-log" width="16" height="16" rx="2.5" fill="currentColor" />
           <text
+            class="icon-glyph"
             x="8"
             y="10.9"
             text-anchor="middle"
             font-family="JetBrains Mono, ui-monospace, monospace"
             font-size="5.6"
             font-weight="800"
-            fill="#ffffff"
           >
             LOG
           </text>
@@ -115,12 +115,12 @@ export type ExplorerIconName =
         <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 24 24" aria-hidden="true">
           <path
             d="M3 7.5C3 6.67 3.67 6 4.5 6h4.1c.4 0 .78.16 1.06.44L11 8h7.5c.83 0 1.5.67 1.5 1.5V11H8.3c-.66 0-1.25.43-1.44 1.06L5 18V7.5z"
-            [attr.fill]="color()"
+            [style.fill]="color()"
             opacity="0.72"
           />
           <path
             d="M8.3 10h12.7c.95 0 1.64.9 1.39 1.82l-1.62 6.11c-.17.63-.74 1.07-1.39 1.07H3.5A1.5 1.5 0 0 1 2 17.5v-1.03L6.86 10.9c.31-.55.9-.9 1.44-.9z"
-            [attr.fill]="color()"
+            [style.fill]="color()"
           />
         </svg>
       }
@@ -128,7 +128,7 @@ export type ExplorerIconName =
         <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 24 24" aria-hidden="true">
           <path
             d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"
-            [attr.fill]="color()"
+            [style.fill]="color()"
           />
         </svg>
       }
@@ -141,11 +141,35 @@ export type ExplorerIconName =
       flex-shrink: 0;
       align-items: center;
     }
+
+    .icon-typescript {
+      color: rgb(var(--accent));
+    }
+
+    .icon-json {
+      color: rgb(var(--warm));
+    }
+
+    .icon-env {
+      color: rgb(var(--green));
+    }
+
+    .icon-markdown {
+      color: rgb(var(--accent-2));
+    }
+
+    .icon-log {
+      color: rgb(var(--text-muted));
+    }
+
+    .icon-glyph {
+      fill: rgb(var(--surface));
+    }
   `,
 })
 export class ExplorerIconComponent {
   readonly name = input<ExplorerIconName>('folder');
-  readonly color = input('#8a9ab5');
+  readonly color = input('rgb(var(--text-muted))');
   readonly size = input(16);
   readonly open = input(false);
 }

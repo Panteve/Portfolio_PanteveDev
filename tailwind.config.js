@@ -8,13 +8,14 @@ module.exports = {
         'surface-0': 'rgb(var(--surface-0) / <alpha-value>)',
         surface: 'rgb(var(--surface) / <alpha-value>)',
         'surface-2': 'rgb(var(--surface-2) / <alpha-value>)',
-        line: 'rgb(var(--border) / 0.12)',
+        line: 'rgb(var(--border) / var(--line-alpha))',
         ink: 'rgb(var(--text) / <alpha-value>)',
         muted: 'rgb(var(--text-muted) / <alpha-value>)',
         accent: 'rgb(var(--accent) / <alpha-value>)',
         'accent-2': 'rgb(var(--accent-2) / <alpha-value>)',
+        green: 'rgb(var(--green) / <alpha-value>)',
+        error: 'rgb(var(--error) / <alpha-value>)',
         warm: 'rgb(var(--warm) / <alpha-value>)',
-        pink: 'rgb(var(--pink) / <alpha-value>)',
       },
       fontFamily: {
         mono: [

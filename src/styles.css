@@ -8,25 +8,53 @@
    (ej. text-accent/70) y se mapean en tailwind.config.js.
 --------------------------------------------------------------------------- */
 @layer base {
-  :root {
-    --bg: 11 16 32;
-    --surface-0: 8 12 25;
-    --surface: 15 23 41;
-    --surface-2: 19 28 51;
-    --border: 255 255 255;
-    --text: 219 227 239;
-    --text-muted: 167 181 203;
-    --accent: 45 212 191;
-    --accent-2: 129 140 248;
-    --warm: 253 186 116;
-    --pink: 244 114 182;
-    --syntax-key: 156 220 254;
-    --syntax-boolean: 126 231 135;
-    --syntax-separator: 130 145 170;
-    --syntax-brace-0: 250 204 21;
-    --syntax-brace-1: 125 211 252;
-    --syntax-brace-2: 196 146 234;
+  :root,
+  :root[data-theme='dark'] {
+    --bg: 26 27 38;
+    --surface-0: 22 22 30;
+    --surface: 26 27 38;
+    --surface-2: 36 40 59;
+    --border: 59 66 82;
+    --line-alpha: 0.85;
+    --text: 192 202 245;
+    --text-muted: 169 177 214;
+    --accent: 122 162 247;
+    --accent-2: 187 154 247;
+    --warm: 255 158 100;
+    --green: 158 206 106;
+    --error: 255 158 100;
+    --syntax-key: 122 162 247;
+    --syntax-boolean: 158 206 106;
+    --syntax-string: 158 206 106;
+    --syntax-separator: 86 95 137;
+    --syntax-brace-0: 158 206 106;
+    --syntax-brace-1: 122 162 247;
+    --syntax-brace-2: 187 154 247;
     color-scheme: dark;
+  }
+
+  :root[data-theme='light'] {
+    --bg: 225 226 231;
+    --surface-0: 208 213 227;
+    --surface: 238 240 245;
+    --surface-2: 238 240 245;
+    --border: 52 59 88;
+    --line-alpha: 0.15;
+    --text: 52 59 88;
+    --text-muted: 86 95 137;
+    --accent: 36 89 201;
+    --accent-2: 122 63 208;
+    --warm: 143 75 0;
+    --green: 74 101 48;
+    --error: 184 18 56;
+    --syntax-key: 0 101 127;
+    --syntax-boolean: 74 101 48;
+    --syntax-string: 74 101 48;
+    --syntax-separator: 86 95 137;
+    --syntax-brace-0: 74 101 48;
+    --syntax-brace-1: 36 89 201;
+    --syntax-brace-2: 122 63 208;
+    color-scheme: light;
   }
 
   html {
@@ -44,7 +72,7 @@
       Menlo,
       Consolas,
       monospace;
-    background-color: rgb(var(--surface));
+    background-color: rgb(var(--bg));
     color: rgb(var(--text));
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
@@ -55,12 +83,12 @@
   h2,
   h3,
   h4 {
-    color: #fff;
+    color: rgb(var(--text));
   }
 
   ::selection {
     background: rgb(var(--accent) / 0.28);
-    color: #fff;
+    color: rgb(var(--text));
   }
 
   summary {
@@ -87,13 +115,13 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgb(255 255 255 / 0.12);
+    background: rgb(var(--text) / 0.14);
     border-radius: 999px;
     border: 2px solid rgb(var(--surface));
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgb(255 255 255 / 0.22);
+    background: rgb(var(--text) / 0.24);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -108,13 +136,19 @@
   }
 }
 
+/* En los paneles #d0d5e3 el muted original (#565f89) queda en 4.22:1.
+   Se oscurece mínimamente para superar 4.5:1 sin tocar los comentarios del editor. */
+[data-theme='light'] .bg-surface-0:not(.terminal-panel) {
+  --text-muted: 81 90 132;
+}
+
 @layer components {
   .tab-link {
-    @apply relative flex h-full items-center border-l border-line px-4 text-xs text-muted transition-colors duration-150 hover:bg-white/5 hover:text-ink;
+    @apply relative flex h-full items-center border-l border-line px-4 text-xs text-muted transition-colors duration-150 hover:bg-ink/5 hover:text-ink;
   }
 
   .tab-link-active {
-    @apply bg-white/[0.06] text-white;
+    @apply bg-ink/[0.06] text-ink;
     box-shadow: 0 0 22px -12px rgb(var(--accent) / 0.55);
   }
 
@@ -132,7 +166,7 @@
   .editor-window {
     box-shadow:
       0 24px 60px -38px rgb(0 0 0 / 0.95),
-      inset 0 1px 0 rgb(255 255 255 / 0.03);
+      inset 0 1px 0 rgb(var(--text) / 0.03);
   }
 
   /* Botones ---------------------------------------------------------------- */
@@ -148,8 +182,13 @@
     @apply border-accent/40 bg-accent/10 text-accent hover:bg-accent/20 active:bg-accent/25;
   }
 
+  [data-theme='light'] .btn-accent,
+  [data-theme='light'] .btn-warm {
+    @apply text-ink;
+  }
+
   .btn-ghost {
-    @apply border-line bg-white/[0.02] text-ink hover:border-white/20 hover:bg-white/[0.06];
+    @apply border-line bg-ink/[0.02] text-ink hover:border-ink/20 hover:bg-ink/[0.06];
   }
 
   /* Etiquetas y paneles ---------------------------------------------------- */
@@ -175,7 +214,7 @@
   }
 
   .field-invalid {
-    @apply border-pink/50 focus:border-pink focus:ring-pink/30;
+    @apply border-error/50 focus:border-error focus:ring-error/30;
   }
 
   .field-inset {
@@ -189,8 +228,8 @@
 .aim-area {
   background-color: rgb(var(--bg));
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgb(var(--text) / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--text) / 0.05) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
@@ -198,7 +237,7 @@
   position: absolute;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
-  background: radial-gradient(circle at 35% 30%, #99f6e4, #14b8a6 55%, #0f766e 100%);
+  background: radial-gradient(circle at 35% 30%, #a9c1ff, #7aa2f7 55%, #3d59a1 100%);
   box-shadow:
     0 0 0 5px rgb(var(--accent) / 0.13),
     0 0 26px rgb(var(--accent) / 0.5);
@@ -225,7 +264,7 @@
   inset: 34%;
   border-radius: 9999px;
   background: rgb(var(--bg) / 0.55);
-  border: 1px solid rgb(255 255 255 / 0.3);
+  border: 1px solid rgb(var(--text) / 0.3);
 }
 
 /* ---------------------------------------------------------------------------
@@ -251,7 +290,7 @@
 }
 
 .code-line:hover {
-  background: rgb(var(--border) / 0.025);
+  background: rgb(var(--text) / 0.03);
 }
 
 .code-line-active {
@@ -262,6 +301,10 @@
     transparent
   );
   box-shadow: inset 2px 0 0 rgb(var(--accent) / 0.6);
+}
+
+.code-minimap {
+  box-shadow: inset 1px 0 0 rgb(var(--text) / 0.04);
 }
 
 .minimap {
@@ -323,8 +366,8 @@
     to right,
     transparent 0,
     transparent calc(2ch - 1px),
-    rgb(var(--border) / 0.24) calc(2ch - 1px),
-    rgb(var(--border) / 0.24) 2ch
+    rgb(var(--text) / 0.1) calc(2ch - 1px),
+    rgb(var(--text) / 0.1) 2ch
   );
   pointer-events: none;
 }
@@ -342,7 +385,7 @@
 }
 
 .tok-string {
-  color: rgb(var(--pink));
+  color: rgb(var(--syntax-string));
 }
 
 .tok-keyword {
@@ -358,7 +401,7 @@
 }
 
 .tok-decorator {
-  color: #facc15;
+  color: rgb(var(--warm));
 }
 
 .tok-key {
@@ -383,4 +426,23 @@
 
 .tok-brace-2 {
   color: rgb(var(--syntax-brace-2));
+}
+
+/* Transición breve solo mientras se cambia de tema. */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition-property: background-color, border-color, color !important;
+  transition-duration: 150ms !important;
+  transition-timing-function: ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition: none !important;
+  }
 }

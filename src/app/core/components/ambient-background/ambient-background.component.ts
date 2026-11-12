@@ -217,7 +217,7 @@ export class AmbientBackgroundComponent implements AfterViewInit, OnDestroy {
   };
 
   /**
-   * El CSS usa `--glow-x` / `--glow-y` para colocar el teal y calcula el
+   * El CSS usa `--glow-x` / `--glow-y` para colocar el azul y calcula el
    * violeta en el punto espejo con las dimensiones reales del viewport.
    */
   private applyPosition(): void {

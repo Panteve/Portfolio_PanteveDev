@@ -30,10 +30,10 @@ const TREE_KEYS = ['ArrowDown', 'ArrowUp', 'Home', 'End', 'ArrowRight', 'ArrowLe
 
 /** Colores de carpeta al estilo de Material Icon Theme de VS Code. */
 const FOLDER_COLORS: Record<string, string> = {
-  bio: '#8bc34a',
-  intereses: '#c586c0',
-  educacion: '#42a5f5',
-  experiencia: '#e37933',
+  bio: 'rgb(var(--green))',
+  intereses: 'rgb(var(--accent-2))',
+  educacion: 'rgb(var(--accent))',
+  experiencia: 'rgb(var(--warm))',
 };
 
 @Component({
@@ -203,7 +203,7 @@ export class SobreMiComponent {
     const base = 'rounded px-2 py-0.5 text-[10px] transition-colors duration-150';
 
     return this.viewMode() === mode
-      ? `${base} bg-accent/10 text-accent ring-1 ring-inset ring-accent/20`
+      ? `${base} bg-accent/10 text-ink ring-1 ring-inset ring-accent/20`
       : `${base} text-muted hover:text-ink`;
   }
 
@@ -291,8 +291,8 @@ export class SobreMiComponent {
       'flex shrink-0 items-center gap-1.5 rounded-t border border-b-0 px-3 py-1.5 text-[11px] transition-colors duration-150';
 
     return this.selected().id === file.id
-      ? `${base} border-line bg-surface text-white ring-1 ring-inset ring-accent/25 shadow-[0_0_22px_-10px_rgba(45,212,191,0.55)]`
-      : `${base} border-transparent text-muted hover:bg-white/5 hover:text-ink`;
+      ? `${base} border-line bg-surface text-ink ring-1 ring-inset ring-accent/25 shadow-[0_0_22px_-10px_rgba(122,162,247,0.55)]`
+      : `${base} border-transparent text-muted hover:bg-ink/5 hover:text-ink`;
   }
 
   protected toggleFolder(folderId: string): void {
@@ -312,7 +312,7 @@ export class SobreMiComponent {
   }
 
   protected folderColor(folderId: string): string {
-    return FOLDER_COLORS[folderId] ?? '#8a9ab5';
+    return FOLDER_COLORS[folderId] ?? 'rgb(var(--text-muted))';
   }
 
   protected fileClass(file: AboutFile): string {
@@ -320,8 +320,8 @@ export class SobreMiComponent {
       'flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-[11px] transition-colors duration-150';
 
     return this.selected().id === file.id
-      ? `${base} bg-accent/10 text-white ring-1 ring-inset ring-accent/30 shadow-[0_0_18px_-8px_rgba(45,212,191,0.5)]`
-      : `${base} text-muted hover:bg-white/5 hover:text-ink`;
+      ? `${base} bg-accent/10 text-ink ring-1 ring-inset ring-accent/30 shadow-[0_0_18px_-8px_rgba(122,162,247,0.5)]`
+      : `${base} text-muted hover:bg-ink/5 hover:text-ink`;
   }
 
   protected onTreeKeydown(event: KeyboardEvent): void {

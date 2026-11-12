@@ -2,12 +2,12 @@ import { Component, computed, input, ChangeDetectionStrategy } from '@angular/co
 import { Project, ProjectTone } from '../../../data/projects';
 
 const TONE_CLASSES: Record<ProjectTone, string> = {
-  teal: 'from-teal-400/30 via-teal-500/10 to-transparent',
-  violet: 'from-indigo-400/30 via-indigo-500/10 to-transparent',
-  amber: 'from-amber-300/25 via-orange-500/10 to-transparent',
-  rose: 'from-rose-400/25 via-pink-500/10 to-transparent',
-  sky: 'from-sky-400/25 via-cyan-500/10 to-transparent',
-  lime: 'from-lime-300/25 via-emerald-500/10 to-transparent',
+  teal: 'from-accent/30 via-accent/10 to-transparent',
+  violet: 'from-accent-2/30 via-accent-2/10 to-transparent',
+  amber: 'from-warm/30 via-warm/10 to-transparent',
+  rose: 'from-accent-2/25 via-accent-2/10 to-transparent',
+  sky: 'from-accent/25 via-accent/10 to-transparent',
+  lime: 'from-green/25 via-green/10 to-transparent',
 };
 
 @Component({
@@ -26,20 +26,20 @@ const TONE_CLASSES: Record<ProjectTone, string> = {
         <div [class]="'absolute inset-0 bg-gradient-to-br ' + toneClass()"></div>
         <div
           class="absolute inset-0 opacity-[0.18]"
-          style="background-image: linear-gradient(to right, rgb(255 255 255 / 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgb(255 255 255 / 0.5) 1px, transparent 1px); background-size: 22px 22px"
+          style="background-image: linear-gradient(to right, rgb(var(--text) / 0.3) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--text) / 0.3) 1px, transparent 1px); background-size: 22px 22px"
           aria-hidden="true"
         ></div>
 
         <div class="relative flex items-center gap-1.5 border-b border-line px-3 py-2">
-          <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
-          <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
-          <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+          <span class="h-1.5 w-1.5 rounded-full bg-ink/20"></span>
+          <span class="h-1.5 w-1.5 rounded-full bg-ink/20"></span>
+          <span class="h-1.5 w-1.5 rounded-full bg-ink/20"></span>
           <span class="ml-2 text-[10px] text-muted">{{ project().code }}.proj</span>
         </div>
 
         <div class="relative flex flex-1 items-center justify-center p-4">
           <span
-            class="select-none text-4xl font-bold tracking-tight text-white/85 drop-shadow-[0_0_18px_rgba(45,212,191,0.25)] sm:text-5xl"
+            class="select-none text-4xl font-bold tracking-tight text-ink/85 drop-shadow-[0_0_18px_rgba(122,162,247,0.25)] sm:text-5xl"
             aria-hidden="true"
             >{{ project().code }}</span
           >

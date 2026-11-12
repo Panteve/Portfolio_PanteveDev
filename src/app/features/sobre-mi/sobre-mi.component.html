@@ -41,7 +41,7 @@
                 role="treeitem"
                 [attr.aria-expanded]="isOpen(folder.id)"
                 [attr.data-folder]="folder.id"
-                class="flex w-full items-center gap-1.5 rounded px-2 py-1.5 text-left text-[11px] text-ink transition-colors duration-150 hover:bg-white/5"
+                class="flex w-full items-center gap-1.5 rounded px-2 py-1.5 text-left text-[11px] text-ink transition-colors duration-150 hover:bg-ink/5"
                 (click)="toggleFolder(folder.id)"
               >
                 <app-explorer-icon name="chevron" [open]="isOpen(folder.id)" [size]="12" class="text-muted" />
@@ -151,7 +151,6 @@
               [id]="'tab-' + file.id"
               [attr.aria-controls]="'editor'"
               [attr.aria-selected]="selected().id === file.id"
-              [attr.aria-label]="file.name + (isModified(file) ? ', modificado' : '')"
               [class]="tabClass(file)"
               (click)="selectTab(file)"
             >
@@ -163,6 +162,7 @@
                   title="Modificado"
                   aria-hidden="true"
                 ></span>
+                <span class="sr-only">, modificado</span>
               } @else {
                 <span class="ml-0.5 shrink-0 text-muted" aria-hidden="true">×</span>
               }
@@ -183,7 +183,7 @@
         aria-label="Ruta del archivo"
       >
         <div class="flex min-w-0 items-center gap-1.5 overflow-hidden">
-          <span class="shrink-0 text-muted/70">src</span>
+          <span class="shrink-0 text-muted">src</span>
 
           @if (selectedFolderLabel(); as folderLabel) {
             <span class="shrink-0 text-muted/40" aria-hidden="true">›</span>
@@ -227,8 +227,8 @@
       @if (viewMode() === 'view') {
         <div class="min-h-0 max-h-[540px] flex-1 overflow-auto bg-surface px-5 py-6 lg:max-h-none">
           <article class="mx-auto max-w-[68ch]">
-            <header class="border-b border-line/70 pb-4">
-              <h2 class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            <header class="border-b border-line pb-4">
+              <h2 class="text-xl font-semibold tracking-tight text-ink sm:text-2xl">
                 {{ selected().view.title }}
               </h2>
               <p class="mt-2 text-sm leading-7 text-muted">{{ selected().view.intro }}</p>
@@ -238,7 +238,7 @@
               @for (section of selected().view.sections; track section.title) {
                 <section>
                   <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h3 class="text-sm font-medium text-white">{{ section.title }}</h3>
+                    <h3 class="text-sm font-medium text-ink">{{ section.title }}</h3>
                     @if (section.meta) {
                       <span class="text-[10px] uppercase tracking-[0.12em] text-muted">
                         {{ section.meta }}
@@ -263,7 +263,7 @@
           </div>
 
           <div
-            class="pointer-events-none absolute inset-y-0 right-0 hidden w-16 border-l border-line/60 bg-surface-0/50 px-2 py-3 shadow-[inset_1px_0_0_rgba(255,255,255,0.04)] md:block"
+            class="code-minimap pointer-events-none absolute inset-y-0 right-0 hidden w-16 border-l border-line bg-surface-0/50 px-2 py-3 md:block"
             aria-hidden="true"
           >
             <app-code-minimap [code]="displayedCode()" [activeLine]="activeLine()" />
@@ -288,11 +288,11 @@
           href="/assets/cv.pdf"
           download
           class="btn btn-accent mt-3 w-full"
-          aria-label="Descargar CV en PDF"
+          aria-label="Descargar CV PDF"
         >
           <span aria-hidden="true">↓</span>
           Descargar CV
-          <span class="text-[10px] opacity-70">PDF</span>
+          <span class="text-[10px]">PDF</span>
         </a>
       </div>
     </aside>

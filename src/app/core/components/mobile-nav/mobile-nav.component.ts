@@ -15,7 +15,7 @@ import { NAV_TABS } from '../../../data/navigation';
         @for (tab of tabs; track tab.path) {
           <a
             [routerLink]="tab.path"
-            routerLinkActive="text-accent bg-white/[0.03]"
+            routerLinkActive="text-accent bg-ink/[0.03]"
             #rla="routerLinkActive"
             [routerLinkActiveOptions]="{ exact: !!tab.exact }"
             [attr.aria-current]="rla.isActive ? 'page' : null"

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <title>Diego — Desarrollador full-stack</title>
@@ -9,7 +9,34 @@
       name="description"
       content="Portfolio de Diego, desarrollador full-stack en Bogotá. Proyectos de software, videojuegos y diseño de interfaces."
     />
-    <meta name="theme-color" content="#0b1020" />
+    <meta name="theme-color" content="#1a1b26" />
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var stored = null;
+
+        try {
+          stored = window.localStorage.getItem('portfolio-theme');
+        } catch (error) {
+          // El almacenamiento puede estar bloqueado; se usa la preferencia del sistema.
+        }
+
+        var theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+
+        root.setAttribute('data-theme', theme);
+        root.style.colorScheme = theme;
+
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) {
+          themeColor.setAttribute('content', theme === 'light' ? '#e1e2e7' : '#1a1b26');
+        }
+      })();
+    </script>
     <meta property="og:title" content="Diego — Desarrollador full-stack" />
     <meta
       property="og:description"

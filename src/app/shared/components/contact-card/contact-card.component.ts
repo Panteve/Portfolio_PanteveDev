@@ -7,7 +7,7 @@ import { PROFILE, SOCIAL_LINKS } from '../../../data/profile';
   template: `
     <article class="overflow-hidden rounded-md border border-line bg-surface">
       <header
-        class="flex items-center justify-between gap-2 border-b border-line bg-white/[0.02] px-3 py-2"
+        class="flex items-center justify-between gap-2 border-b border-line bg-ink/[0.02] px-3 py-2"
       >
         <div class="flex min-w-0 items-center gap-2">
           <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
@@ -24,7 +24,7 @@ import { PROFILE, SOCIAL_LINKS } from '../../../data/profile';
             [href]="link.href"
             [attr.target]="link.external ? '_blank' : null"
             [attr.rel]="link.external ? 'noreferrer' : null"
-            class="group flex items-center gap-2 rounded px-1.5 py-0.5 transition-colors duration-150 hover:bg-white/5"
+            class="group flex items-center gap-2 rounded px-1.5 py-0.5 transition-colors duration-150 hover:bg-ink/5"
           >
             <span class="shrink-0 text-accent/70" aria-hidden="true">›</span>
             <span class="w-14 shrink-0 text-[10px] text-muted">{{ link.command }}</span>
