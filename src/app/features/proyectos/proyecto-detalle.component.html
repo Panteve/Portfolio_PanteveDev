@@ -1,5 +1,5 @@
 @if (project(); as project) {
-  <section class="p-5 sm:p-8 lg:p-10" aria-labelledby="detalle-titulo">
+  <section class="flex-1 bg-surface p-5 sm:p-8 lg:p-10" aria-labelledby="detalle-titulo">
     <a
       routerLink="/proyectos"
       class="inline-flex items-center gap-2 text-[11px] text-muted transition-colors duration-150 hover:text-accent"
@@ -69,7 +69,7 @@
         </section>
       </div>
 
-      <aside class="space-y-5 lg:border-l lg:border-line lg:pl-6">
+      <aside class="space-y-5 rounded-md border border-line bg-surface-2 p-4 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.85)] lg:border-l lg:border-line lg:pl-6">
         <div>
           <h2 class="label-caps">estado</h2>
           <p class="mt-1 text-sm text-ink">{{ statusLabel() }}</p>
@@ -121,7 +121,7 @@
     </div>
   </section>
 } @else {
-  <section class="flex min-h-[420px] flex-col items-center justify-center gap-3 p-8 text-center">
+  <section class="flex min-h-[420px] flex-1 flex-col items-center justify-center gap-3 bg-surface p-8 text-center">
     <p class="text-[11px] text-muted">// 404 · proyecto no encontrado</p>
     <h1 class="text-xl font-semibold text-white">Ese proyecto no existe</h1>
     <p class="max-w-sm text-xs leading-6 text-muted">

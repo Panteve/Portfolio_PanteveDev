@@ -1,6 +1,14 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 
-export type ExplorerIconName = 'folder' | 'folder-open' | 'typescript' | 'chevron';
+export type ExplorerIconName =
+  | 'folder'
+  | 'folder-open'
+  | 'typescript'
+  | 'json'
+  | 'env'
+  | 'log'
+  | 'markdown'
+  | 'chevron';
 
 /**
  * Iconos del explorador con la estética de Material Icon Theme de VS Code.
@@ -36,6 +44,70 @@ export type ExplorerIconName = 'folder' | 'folder-open' | 'typescript' | 'chevro
             fill="#ffffff"
           >
             TS
+          </text>
+        </svg>
+      }
+      @case ('json') {
+        <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
+          <rect width="16" height="16" rx="2.5" fill="#e8b339" />
+          <text
+            x="8"
+            y="11.4"
+            text-anchor="middle"
+            font-family="JetBrains Mono, ui-monospace, monospace"
+            font-size="8"
+            font-weight="800"
+            fill="#1b1b1b"
+          >
+            &#123;&#125;
+          </text>
+        </svg>
+      }
+      @case ('env') {
+        <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
+          <rect width="16" height="16" rx="2.5" fill="#5aa469" />
+          <text
+            x="8"
+            y="10.9"
+            text-anchor="middle"
+            font-family="JetBrains Mono, ui-monospace, monospace"
+            font-size="5.6"
+            font-weight="800"
+            fill="#ffffff"
+          >
+            ENV
+          </text>
+        </svg>
+      }
+      @case ('markdown') {
+        <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
+          <rect width="16" height="16" rx="2.5" fill="#519aba" />
+          <text
+            x="8"
+            y="11.2"
+            text-anchor="middle"
+            font-family="JetBrains Mono, ui-monospace, monospace"
+            font-size="6.4"
+            font-weight="800"
+            fill="#ffffff"
+          >
+            MD
+          </text>
+        </svg>
+      }
+      @case ('log') {
+        <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 16 16" aria-hidden="true">
+          <rect width="16" height="16" rx="2.5" fill="#64748b" />
+          <text
+            x="8"
+            y="10.9"
+            text-anchor="middle"
+            font-family="JetBrains Mono, ui-monospace, monospace"
+            font-size="5.6"
+            font-weight="800"
+            fill="#ffffff"
+          >
+            LOG
           </text>
         </svg>
       }

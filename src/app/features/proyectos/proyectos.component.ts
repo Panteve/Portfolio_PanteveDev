@@ -7,6 +7,7 @@ import { TechFiltersComponent } from './components/tech-filters/tech-filters.com
 @Component({
   selector: 'app-proyectos',
   imports: [ProjectCardComponent, TechFiltersComponent],
+  host: { class: 'flex flex-1 flex-col' },
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './proyectos.component.html',
 })

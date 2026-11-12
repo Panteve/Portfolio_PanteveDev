@@ -1,9 +1,9 @@
-<section class="flex flex-col" aria-labelledby="proyectos-titulo">
+<section class="flex flex-1 flex-col" aria-labelledby="proyectos-titulo">
   <h1 id="proyectos-titulo" class="sr-only">Proyectos</h1>
 
-  <div class="grid grid-cols-1 lg:grid-cols-[212px_minmax(0,1fr)]">
+  <div class="grid flex-1 grid-cols-1 lg:grid-cols-[212px_minmax(0,1fr)]">
     <!-- Filtros de escritorio -->
-    <aside class="hidden border-r border-line lg:block" aria-labelledby="filtros-titulo">
+    <aside class="hidden border-r border-line bg-surface-0 lg:block" aria-labelledby="filtros-titulo">
       <div class="border-b border-line px-4 py-2.5">
         <h2 id="filtros-titulo" class="label-caps">proyectos</h2>
       </div>
@@ -18,9 +18,9 @@
       </div>
     </aside>
 
-    <div class="min-w-0">
+    <div class="editor-window min-w-0 bg-surface">
       <!-- Filtros en desplegable (móvil) -->
-      <details class="group border-b border-line lg:hidden">
+      <details class="group border-b border-line bg-surface-0 lg:hidden">
         <summary
           class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[11px] text-ink"
         >
@@ -66,7 +66,7 @@
             }
           </div>
         } @else {
-          <div class="rounded-md border border-dashed border-line px-6 py-16 text-center">
+          <div class="rounded-md border border-dashed border-line bg-surface-2/40 px-6 py-16 text-center">
             <p class="text-[11px] text-muted">// ningún proyecto coincide con los filtros</p>
             <button type="button" class="btn btn-ghost mt-3" (click)="clearFilters()">
               limpiar-filtros

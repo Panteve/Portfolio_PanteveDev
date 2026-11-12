@@ -1,10 +1,16 @@
 :host {
+  --glow-x: 20vw;
+  --glow-y: 18vh;
+  --viewport-w: 100vw;
+  --viewport-h: 100vh;
+
   position: fixed;
   inset: 0;
   z-index: 0;
   display: block;
   overflow: hidden;
   pointer-events: none;
+  isolation: isolate;
   background-color: rgb(var(--surface));
 }
 
@@ -16,13 +22,13 @@
   will-change: transform;
 }
 
-/* Posiciones de reposo: teal arriba-izquierda, violeta abajo-derecha. */
+/* Teal: sigue al cursor. Violeta: siempre en el punto espejo del viewport. */
 .glow-teal {
   width: 78vmax;
   height: 78vmax;
   margin: -39vmax 0 0 -39vmax;
   background: radial-gradient(circle, rgb(var(--accent) / 0.15), transparent 62%);
-  transform: translate3d(20vw, 18vh, 0);
+  transform: translate3d(var(--glow-x), var(--glow-y), 0);
 }
 
 .glow-violet {
@@ -30,5 +36,30 @@
   height: 86vmax;
   margin: -43vmax 0 0 -43vmax;
   background: radial-gradient(circle, rgb(var(--accent-2) / 0.14), transparent 64%);
-  transform: translate3d(80vw, 82vh, 0);
+  transform: translate3d(
+    calc(var(--viewport-w) - var(--glow-x)),
+    calc(var(--viewport-h) - var(--glow-y)),
+    0
+  );
+}
+
+/* Grano estático: textura sutil sin coste por frame. */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Viñeteado suave para que los bordes no compitan con el contenido. */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 42%,
+    rgb(var(--bg) / 0.55) 100%
+  );
 }

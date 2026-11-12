@@ -32,6 +32,15 @@ export class TechFiltersComponent {
     return this.active().includes(name);
   }
 
+  protected filterClass(name: string): string {
+    const base =
+      'flex cursor-pointer items-center gap-2 rounded px-1.5 py-1 text-[11px] text-muted transition-colors duration-150 hover:bg-white/5 hover:text-ink';
+
+    return this.isActive(name)
+      ? `${base} bg-accent/10 text-ink ring-1 ring-inset ring-accent/20 shadow-[0_0_16px_-10px_rgba(45,212,191,0.55)]`
+      : base;
+  }
+
   protected onSearch(event: Event): void {
     this.query.set((event.target as HTMLInputElement).value);
   }

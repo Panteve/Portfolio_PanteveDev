@@ -8,6 +8,7 @@ import { statusBadgeClass } from '../../shared/utils/project-status';
 @Component({
   selector: 'app-proyecto-detalle',
   imports: [RouterLink, ProjectVisualComponent],
+  host: { class: 'flex flex-1 flex-col' },
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './proyecto-detalle.component.html',
 })

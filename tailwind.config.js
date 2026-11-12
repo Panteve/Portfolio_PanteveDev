@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         bg: 'rgb(var(--bg) / <alpha-value>)',
+        'surface-0': 'rgb(var(--surface-0) / <alpha-value>)',
         surface: 'rgb(var(--surface) / <alpha-value>)',
         'surface-2': 'rgb(var(--surface-2) / <alpha-value>)',
         line: 'rgb(var(--border) / 0.12)',

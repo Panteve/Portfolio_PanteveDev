@@ -41,7 +41,7 @@
     @for (technology of filteredTechnologies(); track technology.name) {
       <li>
         <label
-          class="flex cursor-pointer items-center gap-2 rounded px-1.5 py-1 text-[11px] text-muted transition-colors duration-150 hover:bg-white/5 hover:text-ink"
+          [class]="filterClass(technology.name)"
         >
           <input
             type="checkbox"

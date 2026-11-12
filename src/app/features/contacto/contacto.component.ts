@@ -9,6 +9,7 @@ type FieldName = 'nombre' | 'correo' | 'mensaje';
 @Component({
   selector: 'app-contacto',
   imports: [ReactiveFormsModule, IconComponent],
+  host: { class: 'flex flex-1 flex-col' },
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './contacto.component.html',
 })
