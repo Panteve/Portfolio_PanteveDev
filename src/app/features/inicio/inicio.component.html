@@ -3,25 +3,33 @@
   aria-labelledby="inicio-titulo"
 >
   <div class="min-w-0">
-    <p class="text-[11px] text-muted">// hola-mundo</p>
+    <p class="text-[13px] text-muted">// hola-mundo</p>
 
-    <p class="mt-6 text-xs text-muted">Hola. Soy</p>
+    <p class="mt-6 text-[13px] text-muted">Hola. Soy</p>
     <h1
       id="inicio-titulo"
-      class="mt-2 text-[44px] font-bold leading-none tracking-[-0.04em] text-ink sm:text-6xl"
+      class="mt-2 text-[32px] font-bold leading-none tracking-[-0.04em] text-ink sm:text-5xl lg:text-6xl"
     >
-      {{ profile.firstName }}<span class="caret text-accent" aria-hidden="true">_</span>
+      {{ profile.firstName }} {{ profile.lastName }}<span
+        class="caret text-accent"
+        aria-hidden="true"
+        >_</span
+      >
     </h1>
 
     <p class="mt-4 text-sm text-accent-2 sm:text-base">
       <span class="text-muted" aria-hidden="true">&gt;</span> {{ profile.role }}
     </p>
-    <p class="mt-1 text-xs text-muted">{{ profile.city }}</p>
+    <!-- TODO(diego): confirmar y añadir qué busco. -->
+    <p class="mt-3 max-w-[480px] text-sm leading-6 text-muted">
+      Estudiante de Ingeniería de Software en Bogotá. Construyo aplicaciones web y de escritorio, del
+      diseño a la base de datos.
+    </p>
+    <p class="mt-2 text-[13px] text-muted">{{ profile.city }}</p>
 
     <div
-      class="mt-8 max-w-[440px] rounded-md border border-line bg-bg/70 px-4 py-3 text-[11px] leading-6 sm:text-[12px] sm:leading-7"
+      class="mt-8 max-w-[440px] rounded-md border border-line bg-bg/70 px-4 py-3 text-[13px] leading-6 sm:text-sm sm:leading-7"
     >
-      <p class="tok-comment">// completa el juego para continuar</p>
       <p class="tok-comment">// encuentra mi perfil en GitHub:</p>
       <p class="break-all">
         <span class="tok-keyword">const</span>
@@ -37,23 +45,24 @@
     </div>
 
     <div class="mt-6 flex flex-wrap gap-2">
-      <a routerLink="/proyectos" class="btn btn-accent">
+      <a routerLink="/proyectos" class="btn btn-accent text-[13px]">
         ver-proyectos <span aria-hidden="true">→</span>
       </a>
-      <a routerLink="/contacto" class="btn btn-ghost">contacto</a>
+      <!-- TODO(diego): reemplazar el PDF de ejemplo por el CV definitivo. -->
+      <a href="/assets/cv.pdf" download class="btn btn-ghost text-[13px]">Descargar CV</a>
     </div>
 
     <div class="mt-8 border-t border-line pt-4">
-      <p class="label-caps">stack</p>
+      <p class="text-[13px] font-medium tracking-wide text-muted">Tecnologías</p>
       <ul class="mt-2 flex flex-wrap gap-1.5">
         @for (technology of stack; track technology) {
-          <li class="chip">{{ technology }}</li>
+          <li class="chip text-[13px]">{{ technology }}</li>
         }
       </ul>
     </div>
   </div>
 
-  <div class="min-w-0">
-    <app-aim-game />
+  <div class="flex min-w-0 justify-center">
+    <app-profile-card />
   </div>
 </section>

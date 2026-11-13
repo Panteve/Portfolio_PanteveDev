@@ -1,6 +1,13 @@
 import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SeoService } from '../../core/services/seo.service';
-import { PROJECTS, Project, TECHNOLOGIES } from '../../data/projects';
+import {
+  PROJECTS,
+  PROJECT_TYPES,
+  PROJECT_TYPE_LABELS,
+  Project,
+  ProjectType,
+  TECHNOLOGIES,
+} from '../../data/projects';
 import { ProjectCardComponent } from '../../shared/components/project-card/project-card.component';
 import { TechFiltersComponent } from './components/tech-filters/tech-filters.component';
 
@@ -14,23 +21,36 @@ import { TechFiltersComponent } from './components/tech-filters/tech-filters.com
 export class ProyectosComponent {
   protected readonly projects = PROJECTS;
   protected readonly technologies = TECHNOLOGIES;
+  protected readonly types = PROJECT_TYPES;
   protected readonly activeFilters = signal<Set<string>>(new Set());
+  protected readonly activeTypes = signal<Set<ProjectType>>(new Set());
 
   protected readonly activeNames = computed(() => Array.from(this.activeFilters()));
-  protected readonly filterLabel = computed(() =>
-    this.activeFilters().size === 0 ? 'todos' : this.activeNames().join('; '),
-  );
+  protected readonly activeTypeValues = computed(() => Array.from(this.activeTypes()));
+  protected readonly filterLabel = computed(() => {
+    const types = this.activeTypeValues().map((type) => PROJECT_TYPE_LABELS[type]);
+    const technologies = this.activeNames();
+    const active = [...types, ...technologies];
+
+    return active.length === 0 ? 'todos' : active.join('; ');
+  });
 
   protected readonly filteredProjects = computed(() => {
-    const filters = this.activeFilters();
+    const technologies = this.activeFilters();
+    const types = this.activeTypes();
 
-    if (filters.size === 0) {
+    if (technologies.size === 0 && types.size === 0) {
       return this.projects;
     }
 
-    return this.projects.filter((project) =>
-      project.technologies.some((technology) => filters.has(technology)),
-    );
+    return this.projects.filter((project) => {
+      const matchesType = types.size === 0 || types.has(project.tipo);
+      const matchesTechnology =
+        technologies.size === 0 ||
+        project.technologies.some((technology) => technologies.has(technology));
+
+      return matchesType && matchesTechnology;
+    });
   });
 
   protected readonly resultsLabel = computed(
@@ -56,8 +76,21 @@ export class ProyectosComponent {
     });
   }
 
+  protected toggleType(type: ProjectType): void {
+    this.activeTypes.update((current) => {
+      const next = new Set(current);
+      if (next.has(type)) {
+        next.delete(type);
+      } else {
+        next.add(type);
+      }
+      return next;
+    });
+  }
+
   protected clearFilters(): void {
     this.activeFilters.set(new Set());
+    this.activeTypes.set(new Set());
   }
 
   protected projectIndex(project: Project): number {

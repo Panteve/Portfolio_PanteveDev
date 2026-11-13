@@ -2,11 +2,11 @@ import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
 import { PROFILE, STACK } from '../../data/profile';
-import { AimGameComponent } from './components/aim-game/aim-game.component';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 
 @Component({
   selector: 'app-inicio',
-  imports: [AimGameComponent, RouterLink],
+  imports: [RouterLink, ProfileCardComponent],
   templateUrl: './inicio.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styles: `

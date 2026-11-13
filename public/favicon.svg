@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#1a1b26" />
-  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#7aa2f7" stroke-opacity=".45" />
-  <path d="M18 24l8 8-8 8" stroke="#7aa2f7" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M33 40h13" stroke="#bb9af7" stroke-width="4" stroke-linecap="round" />
+  <style>
+    .tile{fill:#1f2335} .p{stroke:#c0caf5} .cur{fill:#7aa2f7}
+    @media (prefers-color-scheme: light){.tile{fill:#f4f5f9} .p{stroke:#1f2a52} .cur{fill:#2a5bd0}}
+  </style>
+  <rect class="tile" width="64" height="64" rx="14"/>
+  <g transform="translate(-1.25 0)"><path d="M14 46V12H27A9 9 0 0 1 27 30H14" fill="none" class="p" stroke-width="7"/><rect x="43" y="49" width="13" height="6" class="cur"/></g>
 </svg>

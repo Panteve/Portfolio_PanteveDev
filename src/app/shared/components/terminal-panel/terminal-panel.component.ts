@@ -118,7 +118,7 @@ export interface TerminalLine {
 export class TerminalPanelComponent {
   readonly lines = input.required<TerminalLine[]>();
 
-  protected readonly open = signal(true);
+  protected readonly open = signal(false);
 
   protected toggle(): void {
     this.open.update((open) => !open);

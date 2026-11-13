@@ -1,4 +1,6 @@
 export type ProjectStatus = 'terminado' | 'en-desarrollo' | 'en-pausa';
+export type ProjectType = 'web' | 'escritorio' | 'movil' | 'juegos' | 'diseno';
+export type ProjectOrigin = 'personal' | 'académico' | 'laboral';
 export type ProjectTone = 'teal' | 'violet' | 'amber' | 'rose' | 'sky' | 'lime';
 
 export interface Project {
@@ -9,7 +11,14 @@ export interface Project {
   summary: string;
   problem: string;
   technologies: string[];
+  /** Tipo principal del proyecto; se usa para el filtro "Tipo". */
+  tipo: ProjectType;
   status: ProjectStatus;
+  /** Origen del proyecto; se muestra en el pie de la tarjeta. */
+  origen: ProjectOrigin;
+  /** Año de realización; se muestra en el pie de la tarjeta. */
+  anio: number;
+  /** Captura o GIF del proyecto. Vacío = placeholder. */
   imageUrl: string;
   githubUrl?: string;
   demoUrl?: string;
@@ -23,6 +32,27 @@ export const STATUS_LABELS: Record<ProjectStatus, string> = {
   terminado: 'terminado',
   'en-desarrollo': 'en desarrollo',
   'en-pausa': 'en pausa',
+};
+
+export interface ProjectTypeOption {
+  value: ProjectType;
+  label: string;
+}
+
+export const PROJECT_TYPES: ProjectTypeOption[] = [
+  { value: 'web', label: 'Web' },
+  { value: 'escritorio', label: 'Escritorio' },
+  { value: 'movil', label: 'Móvil' },
+  { value: 'juegos', label: 'Juegos' },
+  { value: 'diseno', label: 'Diseño' },
+];
+
+export const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
+  web: 'Web',
+  escritorio: 'Escritorio',
+  movil: 'Móvil',
+  juegos: 'Juegos',
+  diseno: 'Diseño',
 };
 
 export const PROJECTS: Project[] = [
@@ -42,7 +72,11 @@ export const PROJECTS: Project[] = [
       'PostgreSQL',
       'Electron',
     ],
+    tipo: 'escritorio',
     status: 'en-pausa',
+    // TODO(diego): confirmar origen y año.
+    origen: 'personal',
+    anio: 2025,
     // TODO(diego): capturas reales del POS.
     imageUrl: '',
     featured: true,
@@ -58,7 +92,11 @@ export const PROJECTS: Project[] = [
     problem:
       'Entrenar la puntería sin salir de un rango de práctica. Cada modo cambia el reto, pero los controles y la lógica de disparo se mantienen iguales.',
     technologies: ['Godot', 'GDScript'],
+    tipo: 'juegos',
     status: 'en-desarrollo',
+    // TODO(diego): confirmar origen y año.
+    origen: 'personal',
+    anio: 2026,
     // TODO(diego): capturas reales del juego.
     imageUrl: '',
     tone: 'rose',
@@ -72,7 +110,11 @@ export const PROJECTS: Project[] = [
     problem:
       'El sitio resuelve consultas de rutas, pero la información clave se pierde entre menús y pasos de más. Revisé los recorridos principales con las heurísticas de Nielsen y propuse una versión corregida.',
     technologies: ['Figma', 'UX/UI'],
+    tipo: 'diseno',
     status: 'terminado',
+    // TODO(diego): confirmar origen y año.
+    origen: 'académico',
+    anio: 2024,
     // TODO(diego): capturas del antes/después en Figma.
     imageUrl: '',
     tone: 'sky',
@@ -86,7 +128,11 @@ export const PROJECTS: Project[] = [
     problem:
       'Las rutinas en notas del teléfono se pierden y no muestran avance. La app reúne rutinas, ejercicios y progreso en un solo lugar.',
     technologies: ['Java', 'Android'],
+    tipo: 'movil',
     status: 'en-desarrollo',
+    // TODO(diego): confirmar origen y año.
+    origen: 'personal',
+    anio: 2026,
     // TODO(diego): capturas de la app.
     imageUrl: '',
     tone: 'amber',
@@ -100,7 +146,11 @@ export const PROJECTS: Project[] = [
     // TODO(diego): completar descripción y tecnologías.
     problem: '// TODO(diego): describir el problema que resuelve el sistema RAG.',
     technologies: [],
+    // TODO(diego): confirmar tipo, origen y año.
+    tipo: 'web',
     status: 'en-desarrollo',
+    origen: 'personal',
+    anio: 2026,
     // TODO(diego): imagen o diagrama del sistema.
     imageUrl: '',
     tone: 'lime',
@@ -114,7 +164,11 @@ export const PROJECTS: Project[] = [
     problem:
       'Los datos de los mundiales están repartidos entre tablas y artículos. La idea es consultarlos desde una sola interfaz, por edición o por selección.',
     technologies: ['Angular', 'NestJS'],
+    tipo: 'web',
     status: 'en-desarrollo',
+    // TODO(diego): confirmar origen y año.
+    origen: 'personal',
+    anio: 2025,
     // TODO(diego): capturas del sitio.
     imageUrl: '',
     tone: 'violet',
@@ -126,7 +180,19 @@ export interface TechnologyFilter {
   count: number;
 }
 
-/** Tecnologías presentes en los proyectos, con cuántas veces aparecen. */
+/** Tecnologías principales que se ofrecen como filtros. */
+const MAIN_TECHNOLOGY_NAMES = new Set([
+  'Angular',
+  'NestJS',
+  'PostgreSQL',
+  'Prisma',
+  'Electron',
+  'Godot',
+  'Android',
+  'Figma',
+]);
+
+/** Tecnologías principales presentes en los proyectos, con cuántas veces aparecen. */
 export const TECHNOLOGIES: TechnologyFilter[] = PROJECTS.reduce<TechnologyFilter[]>(
   (list, project) => {
     for (const technology of project.technologies) {
@@ -140,7 +206,9 @@ export const TECHNOLOGIES: TechnologyFilter[] = PROJECTS.reduce<TechnologyFilter
     return list;
   },
   [],
-).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+)
+  .filter((technology) => MAIN_TECHNOLOGY_NAMES.has(technology.name))
+  .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
 export function getProjectById(id: string): Project | undefined {
   return PROJECTS.find((project) => project.id === id);

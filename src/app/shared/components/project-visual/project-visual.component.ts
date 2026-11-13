@@ -19,6 +19,7 @@ const TONE_CLASSES: Record<ProjectTone, string> = {
         [src]="project().imageUrl"
         [alt]="'Captura del proyecto ' + project().name"
         loading="lazy"
+        decoding="async"
         class="h-full w-full object-cover"
       />
     } @else {
@@ -30,20 +31,22 @@ const TONE_CLASSES: Record<ProjectTone, string> = {
           aria-hidden="true"
         ></div>
 
-        <div class="relative flex items-center gap-1.5 border-b border-line px-3 py-2">
+        <div class="relative flex items-center gap-1.5 border-b border-line px-3 py-1.5">
           <span class="h-1.5 w-1.5 rounded-full bg-ink/20"></span>
           <span class="h-1.5 w-1.5 rounded-full bg-ink/20"></span>
           <span class="h-1.5 w-1.5 rounded-full bg-ink/20"></span>
-          <span class="ml-2 text-[10px] text-muted">{{ project().code }}.proj</span>
+          <span class="ml-2 text-[13px] text-muted">{{ project().code }}.proj</span>
         </div>
 
-        <div class="relative flex flex-1 items-center justify-center p-4">
+        <div class="relative flex flex-1 items-center justify-center p-3">
           <span
-            class="select-none text-4xl font-bold tracking-tight text-ink/85 drop-shadow-[0_0_18px_rgba(122,162,247,0.25)] sm:text-5xl"
+            class="select-none text-3xl font-bold tracking-tight text-ink/85 drop-shadow-[0_0_18px_rgba(122,162,247,0.25)]"
             aria-hidden="true"
             >{{ project().code }}</span
           >
-          <span class="absolute bottom-2 right-3 text-[10px] text-muted">// captura pendiente</span>
+          <span class="absolute bottom-1.5 right-2.5 text-[13px] text-muted"
+            >// captura pendiente</span
+          >
         </div>
       </div>
     }

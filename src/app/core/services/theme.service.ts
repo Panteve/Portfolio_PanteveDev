@@ -14,7 +14,7 @@ export type Theme = 'light' | 'dark';
 const STORAGE_KEY = 'portfolio-theme';
 const THEME_COLORS: Record<Theme, string> = {
   light: '#e1e2e7',
-  dark: '#1a1b26',
+  dark: '#16161e',
 };
 
 @Injectable({ providedIn: 'root' })

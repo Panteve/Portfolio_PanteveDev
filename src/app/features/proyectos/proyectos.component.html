@@ -4,17 +4,22 @@
   <div class="grid flex-1 grid-cols-1 lg:grid-cols-[212px_minmax(0,1fr)]">
     <!-- Filtros de escritorio -->
     <aside class="hidden border-r border-line bg-surface-0 lg:block" aria-labelledby="filtros-titulo">
-      <div class="border-b border-line px-4 py-2.5">
-        <h2 id="filtros-titulo" class="label-caps">proyectos</h2>
-      </div>
+      <div class="lg:sticky lg:top-12">
+        <div class="border-b border-line px-4 py-2.5">
+          <h2 id="filtros-titulo" class="label-caps text-[13px]">proyectos</h2>
+        </div>
 
-      <div class="p-3">
-        <app-tech-filters
-          [technologies]="technologies"
-          [active]="activeNames()"
-          (toggle)="toggleTechnology($event)"
-          (clear)="clearFilters()"
-        />
+        <div class="px-4 py-3">
+          <app-tech-filters
+            [types]="types"
+            [activeTypes]="activeTypeValues()"
+            [technologies]="technologies"
+            [active]="activeNames()"
+            (toggleType)="toggleType($event)"
+            (toggle)="toggleTechnology($event)"
+            (clear)="clearFilters()"
+          />
+        </div>
       </div>
     </aside>
 
@@ -22,23 +27,26 @@
       <!-- Filtros en desplegable (móvil) -->
       <details class="group border-b border-line bg-surface-0 lg:hidden">
         <summary
-          class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[11px] text-ink"
+          class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[13px] text-ink"
         >
           <span class="truncate">
             <span class="text-muted">filtros //</span>
             <span class="text-ink">{{ filterLabel() }}</span>
           </span>
           <span
-            class="shrink-0 text-[9px] text-muted transition-transform duration-150 group-open:rotate-90"
+            class="shrink-0 text-[13px] text-muted transition-transform duration-150 group-open:rotate-90"
             aria-hidden="true"
             >▸</span
           >
         </summary>
 
-        <div class="px-3 pb-4">
+        <div class="px-4 pb-4">
           <app-tech-filters
+            [types]="types"
+            [activeTypes]="activeTypeValues()"
             [technologies]="technologies"
             [active]="activeNames()"
+            (toggleType)="toggleType($event)"
             (toggle)="toggleTechnology($event)"
             (clear)="clearFilters()"
           />
@@ -49,12 +57,12 @@
       <div
         class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-surface-2 px-4 py-2"
       >
-        <p class="min-w-0 truncate text-[11px]">
+        <p class="min-w-0 truncate text-[13px]">
           <span class="text-accent">filtro</span>
           <span class="text-muted"> // </span>
           <span class="text-ink">{{ filterLabel() }}</span>
         </p>
-        <p class="shrink-0 text-[10px] text-muted">{{ resultsLabel() }}</p>
+        <p class="shrink-0 text-[13px] text-muted">{{ resultsLabel() }}</p>
       </div>
 
       <div class="p-4 sm:p-5">
@@ -67,8 +75,12 @@
           </div>
         } @else {
           <div class="rounded-md border border-dashed border-line bg-surface-2/40 px-6 py-16 text-center">
-            <p class="text-[11px] text-muted">// ningún proyecto coincide con los filtros</p>
-            <button type="button" class="btn btn-ghost mt-3" (click)="clearFilters()">
+            <p class="text-[13px] text-muted">// ningún proyecto coincide con los filtros</p>
+            <button
+              type="button"
+              class="btn btn-ghost mt-3 text-[13px]"
+              (click)="clearFilters()"
+            >
               limpiar-filtros
             </button>
           </div>

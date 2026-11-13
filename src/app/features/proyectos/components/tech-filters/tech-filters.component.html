@@ -1,65 +1,85 @@
-<div class="space-y-3">
-  <div class="flex items-center justify-between gap-2">
-    <p class="label-caps">tecnologías</p>
-    @if (active().length) {
-      <button
-        type="button"
-        class="text-[10px] text-muted underline-offset-2 transition-colors duration-150 hover:text-ink hover:underline"
-        (click)="clear.emit()"
-      >
-        limpiar
-      </button>
-    }
-  </div>
-
-  <div class="relative">
-    <svg
-      class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted"
-      width="13"
-      height="13"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      aria-hidden="true"
-    >
-      <circle cx="10" cy="10" r="6.5" />
-      <path d="m15.5 15.5 4.5 4.5" />
-    </svg>
-    <input
-      type="search"
-      aria-label="Buscar tecnología"
-      placeholder="buscar tecnología..."
-      class="field h-8 py-1 pl-8 pr-2 text-[11px]"
-      [value]="query()"
-      (input)="onSearch($event)"
-    />
-  </div>
-
-  <ul class="space-y-0.5">
-    @for (technology of filteredTechnologies(); track technology.name) {
-      <li>
-        <label
-          [class]="filterClass(technology.name)"
+<div class="space-y-4">
+  <section class="space-y-2">
+    <div class="flex items-center justify-between gap-2">
+      <p class="label-caps text-[13px]">tipo</p>
+      @if (activeTypes().length || active().length) {
+        <button
+          type="button"
+          class="text-[13px] text-muted underline-offset-2 transition-colors duration-150 hover:text-ink hover:underline"
+          (click)="clear.emit()"
         >
-          <input
-            type="checkbox"
-            class="h-3 w-3 shrink-0 accent-accent"
-            [checked]="isActive(technology.name)"
-            (change)="toggle.emit(technology.name)"
-          />
-          <app-tech-icon
-            [name]="technology.name"
-            [size]="15"
-            [class.text-accent]="isActive(technology.name)"
-          />
-          <span class="flex-1 truncate">{{ technology.name }}</span>
-          <span class="text-[10px] text-muted">{{ technology.count }}</span>
-        </label>
-      </li>
-    } @empty {
-      <li class="px-1.5 py-2 text-[11px] text-muted">// sin coincidencias</li>
-    }
-  </ul>
+          limpiar
+        </button>
+      }
+    </div>
+
+    <ul class="space-y-0.5">
+      @for (type of types(); track type.value) {
+        <li>
+          <label [class]="typeFilterClass(type.value)">
+            <input
+              type="checkbox"
+              class="h-3.5 w-3.5 shrink-0 accent-accent"
+              [checked]="isTypeActive(type.value)"
+              (change)="toggleType.emit(type.value)"
+            />
+            <span class="flex-1">{{ type.label }}</span>
+          </label>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="space-y-3 border-t border-line pt-3">
+    <p class="label-caps text-[13px]">tecnologías</p>
+
+    <div class="relative">
+      <svg
+        class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted"
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="10" cy="10" r="6.5" />
+        <path d="m15.5 15.5 4.5 4.5" />
+      </svg>
+      <input
+        type="search"
+        aria-label="Buscar tecnología"
+        placeholder="buscar..."
+        class="field h-8 py-1 pl-8 pr-2 text-[13px]"
+        [value]="query()"
+        (input)="onSearch($event)"
+      />
+    </div>
+
+    <ul class="space-y-0.5">
+      @for (technology of filteredTechnologies(); track technology.name) {
+        <li>
+          <label [class]="filterClass(technology.name)">
+            <input
+              type="checkbox"
+              class="h-3 w-3 shrink-0 accent-accent"
+              [checked]="isActive(technology.name)"
+              (change)="toggle.emit(technology.name)"
+            />
+            <app-tech-icon
+              [name]="technology.name"
+              [size]="15"
+              [class.text-accent]="isActive(technology.name)"
+            />
+            <span class="flex-1 truncate">{{ technology.name }}</span>
+            <span class="text-[13px] text-muted">{{ technology.count }}</span>
+          </label>
+        </li>
+      } @empty {
+        <li class="px-1.5 py-2 text-[13px] text-muted">// sin coincidencias</li>
+      }
+    </ul>
+  </section>
 </div>

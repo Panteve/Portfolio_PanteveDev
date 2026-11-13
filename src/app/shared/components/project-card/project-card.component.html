@@ -1,13 +1,13 @@
 <article
-  class="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface-2 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.85)] transition duration-200 hover:border-accent/35 hover:shadow-[0_26px_50px_-28px_rgba(0,0,0,0.95)]"
+  class="group relative flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface-2 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.85)] transition duration-200 hover:border-accent/35 hover:shadow-[0_26px_50px_-28px_rgba(0,0,0,0.95)]"
   [ngClass]="{ 'lg:flex-row': project().featured }"
 >
   <div
     class="relative w-full overflow-hidden border-b border-line"
     [ngClass]="
       project().featured
-        ? 'aspect-[16/9] lg:aspect-auto lg:w-[52%] lg:shrink-0 lg:border-b-0 lg:border-r'
-        : 'aspect-[16/9]'
+        ? 'aspect-[16/7] lg:aspect-auto lg:w-[52%] lg:shrink-0 lg:border-b-0 lg:border-r'
+        : 'aspect-[16/7]'
     "
   >
     <app-project-visual [project]="project()" />
@@ -23,13 +23,13 @@
       <span [class]="statusClass()">{{ statusLabel() }}</span>
     </div>
 
-    <p class="text-xs leading-6 text-muted">{{ project().summary }}</p>
+    <p class="text-[13px] leading-6 text-muted">{{ project().summary }}</p>
 
     <div class="flex flex-wrap gap-1.5">
       @for (technology of project().technologies.slice(0, 4); track technology) {
         <span class="chip">{{ technology }}</span>
       } @empty {
-        <span class="text-[11px] text-muted">// tecnologías por definir</span>
+        <span class="text-[13px] text-muted">// tecnologías por definir</span>
       }
       @if (project().technologies.length > 4) {
         <span class="chip">+{{ project().technologies.length - 4 }}</span>
@@ -37,20 +37,20 @@
     </div>
 
     <div class="mt-auto flex items-center justify-between gap-3 border-t border-line pt-3">
-      <span class="text-[10px] uppercase tracking-[0.16em] text-muted">
-        @if (project().technologies.length) {
-          {{ project().technologies.length }} tecnologías
-        } @else {
-          sin stack
-        }
+      <span class="text-[13px] text-muted">
+        {{ project().origen }} <span aria-hidden="true">·</span> {{ project().anio }}
       </span>
-      <a
-        [routerLink]="['/proyectos', project().id]"
-        [attr.aria-label]="'ver-proyecto: ' + project().name"
-        class="btn btn-ghost group-hover:border-accent/40 group-hover:text-accent"
+      <span
+        class="btn btn-ghost text-[13px] group-hover:border-accent/40 group-hover:text-accent"
       >
         ver-proyecto <span aria-hidden="true">→</span>
-      </a>
+      </span>
     </div>
   </div>
+
+  <a
+    [routerLink]="['/proyectos', project().id]"
+    [attr.aria-label]="'ver-proyecto: ' + project().name"
+    class="absolute inset-0 z-10 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
+  ></a>
 </article>

@@ -8,8 +8,10 @@ export interface SocialLink {
 // Datos personales. Los TODO(diego) se reemplazan cuando tenga los definitivos.
 export const PROFILE = {
   firstName: 'Diego',
-  // TODO(diego): apellido real.
-  lastName: '',
+  // TODO(diego): reemplazar el apellido de ejemplo por el apellido real.
+  lastName: 'Apellido',
+  // TODO(diego): subir una foto vertical a /assets y poner la ruta aquí.
+  photoUrl: '',
   // TODO(diego): usar el apellido en el identificador de la barra superior.
   handle: 'diego-apellido',
   // TODO(diego): confirmar el título profesional.
@@ -23,6 +25,7 @@ export const PROFILE = {
 } as const satisfies {
   firstName: string;
   lastName: string;
+  photoUrl: string;
   handle: string;
   role: string;
   city: string;

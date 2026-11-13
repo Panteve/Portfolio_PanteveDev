@@ -12,7 +12,7 @@
   :root[data-theme='dark'] {
     --bg: 26 27 38;
     --surface-0: 22 22 30;
-    --surface: 26 27 38;
+    --surface: 31 35 53;
     --surface-2: 36 40 59;
     --border: 59 66 82;
     --line-alpha: 0.85;
@@ -36,13 +36,13 @@
   :root[data-theme='light'] {
     --bg: 225 226 231;
     --surface-0: 208 213 227;
-    --surface: 238 240 245;
-    --surface-2: 238 240 245;
+    --surface: 244 245 249;
+    --surface-2: 244 245 249;
     --border: 52 59 88;
     --line-alpha: 0.15;
-    --text: 52 59 88;
+    --text: 31 42 82;
     --text-muted: 86 95 137;
-    --accent: 36 89 201;
+    --accent: 42 91 208;
     --accent-2: 122 63 208;
     --warm: 143 75 0;
     --green: 74 101 48;
@@ -52,7 +52,7 @@
     --syntax-string: 74 101 48;
     --syntax-separator: 86 95 137;
     --syntax-brace-0: 74 101 48;
-    --syntax-brace-1: 36 89 201;
+    --syntax-brace-1: 42 91 208;
     --syntax-brace-2: 122 63 208;
     color-scheme: light;
   }
@@ -193,7 +193,7 @@
 
   /* Etiquetas y paneles ---------------------------------------------------- */
   .chip {
-    @apply inline-flex items-center whitespace-nowrap rounded border border-line bg-surface-2 px-2 py-0.5 text-[11px] text-muted;
+    @apply inline-flex items-center whitespace-nowrap rounded border border-line bg-surface-2 px-2 py-0.5 text-[13px] text-muted;
   }
 
   .chip-accent {
