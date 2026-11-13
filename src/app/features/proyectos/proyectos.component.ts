@@ -9,14 +9,49 @@ import {
   TECHNOLOGIES,
 } from '../../data/projects';
 import { ProjectCardComponent } from '../../shared/components/project-card/project-card.component';
+import { CursorGlowDirective } from '../../shared/directives/cursor-glow.directive';
 import { TechFiltersComponent } from './components/tech-filters/tech-filters.component';
 
 @Component({
   selector: 'app-proyectos',
-  imports: [ProjectCardComponent, TechFiltersComponent],
+  imports: [ProjectCardComponent, CursorGlowDirective, TechFiltersComponent],
   host: { class: 'flex flex-1 flex-col' },
   changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './proyectos.component.html',
+  styles: `
+    .projects-stage {
+      background-image:
+        linear-gradient(to right, rgb(var(--text) / 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(var(--text) / 0.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .projects-stage > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .projects-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        320px circle at var(--cursor-x, 50%) var(--cursor-y, 42%),
+        rgb(var(--accent) / 0.08),
+        transparent 72%
+      );
+      opacity: var(--cursor-glow-opacity, 0);
+      transition: opacity 300ms ease;
+    }
+
+    @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+      .projects-stage::before {
+        display: none;
+      }
+    }
+  `,
 })
 export class ProyectosComponent {
   protected readonly projects = PROJECTS;
@@ -60,7 +95,7 @@ export class ProyectosComponent {
   constructor() {
     inject(SeoService).set(
       'Proyectos · Diego',
-      'Proyectos de Diego: POS multisucursal, juego de puntería en Godot, análisis UX y más.',
+      'Proyectos de Diego: POS multisucursal, juego de puntería en Godot, app de gimnasio y más.',
     );
   }
 

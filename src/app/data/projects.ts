@@ -1,7 +1,7 @@
 export type ProjectStatus = 'terminado' | 'en-desarrollo' | 'en-pausa';
 export type ProjectType = 'web' | 'escritorio' | 'movil' | 'juegos' | 'diseno';
 export type ProjectOrigin = 'personal' | 'académico' | 'laboral';
-export type ProjectTone = 'teal' | 'violet' | 'amber' | 'rose' | 'sky' | 'lime';
+export type ProjectColor = 'accent' | 'orange' | 'accent-2' | 'green' | 'cyan' | 'teal';
 
 export interface Project {
   id: string;
@@ -14,6 +14,8 @@ export interface Project {
   /** Tipo principal del proyecto; se usa para el filtro "Tipo". */
   tipo: ProjectType;
   status: ProjectStatus;
+  /** Color del proyecto dentro de la paleta Tokyo Night. */
+  color: ProjectColor;
   /** Origen del proyecto; se muestra en el pie de la tarjeta. */
   origen: ProjectOrigin;
   /** Año de realización; se muestra en el pie de la tarjeta. */
@@ -23,7 +25,6 @@ export interface Project {
   githubUrl?: string;
   demoUrl?: string;
   featured?: boolean;
-  tone: ProjectTone;
   /** El POS necesita un diagrama de arquitectura que todavía no existe. */
   needsArchitectureDiagram?: boolean;
 }
@@ -74,13 +75,13 @@ export const PROJECTS: Project[] = [
     ],
     tipo: 'escritorio',
     status: 'en-pausa',
+    color: 'accent',
     // TODO(diego): confirmar origen y año.
     origen: 'personal',
     anio: 2025,
     // TODO(diego): capturas reales del POS.
     imageUrl: '',
     featured: true,
-    tone: 'teal',
     needsArchitectureDiagram: true,
   },
   {
@@ -94,30 +95,12 @@ export const PROJECTS: Project[] = [
     technologies: ['Godot', 'GDScript'],
     tipo: 'juegos',
     status: 'en-desarrollo',
+    color: 'orange',
     // TODO(diego): confirmar origen y año.
     origen: 'personal',
     anio: 2026,
     // TODO(diego): capturas reales del juego.
     imageUrl: '',
-    tone: 'rose',
-  },
-  {
-    id: 'transmilenio-ux',
-    name: 'Análisis UX de TransMilenio',
-    code: 'UX',
-    summary:
-      'Evaluación heurística del sitio web de TransMilenio y propuesta de corrección de la interfaz en Figma.',
-    problem:
-      'El sitio resuelve consultas de rutas, pero la información clave se pierde entre menús y pasos de más. Revisé los recorridos principales con las heurísticas de Nielsen y propuse una versión corregida.',
-    technologies: ['Figma', 'UX/UI'],
-    tipo: 'diseno',
-    status: 'terminado',
-    // TODO(diego): confirmar origen y año.
-    origen: 'académico',
-    anio: 2024,
-    // TODO(diego): capturas del antes/después en Figma.
-    imageUrl: '',
-    tone: 'sky',
   },
   {
     id: 'gimnasio-android',
@@ -130,12 +113,12 @@ export const PROJECTS: Project[] = [
     technologies: ['Java', 'Android'],
     tipo: 'movil',
     status: 'en-desarrollo',
+    color: 'green',
     // TODO(diego): confirmar origen y año.
     origen: 'personal',
     anio: 2026,
     // TODO(diego): capturas de la app.
     imageUrl: '',
-    tone: 'amber',
   },
   {
     id: 'sistema-rag',
@@ -149,29 +132,12 @@ export const PROJECTS: Project[] = [
     // TODO(diego): confirmar tipo, origen y año.
     tipo: 'web',
     status: 'en-desarrollo',
+    // TODO(diego): confirmar color, origen y año.
+    color: 'teal',
     origen: 'personal',
     anio: 2026,
     // TODO(diego): imagen o diagrama del sistema.
     imageUrl: '',
-    tone: 'lime',
-  },
-  {
-    id: 'mundiales-futbol',
-    name: 'Web de mundiales',
-    code: 'WC',
-    summary:
-      'Consulta de información histórica de los mundiales de fútbol: ediciones, selecciones y resultados.',
-    problem:
-      'Los datos de los mundiales están repartidos entre tablas y artículos. La idea es consultarlos desde una sola interfaz, por edición o por selección.',
-    technologies: ['Angular', 'NestJS'],
-    tipo: 'web',
-    status: 'en-desarrollo',
-    // TODO(diego): confirmar origen y año.
-    origen: 'personal',
-    anio: 2025,
-    // TODO(diego): capturas del sitio.
-    imageUrl: '',
-    tone: 'violet',
   },
 ];
 

@@ -5,26 +5,38 @@
   <h1 id="contacto-titulo" class="sr-only">Contacto</h1>
 
   <aside class="border-b border-line bg-surface-0 p-4 sm:p-5 lg:border-b-0 lg:border-r">
-    <h2 class="label-caps">contactos</h2>
+    <h2 class="label-caps text-[13px]">contactos</h2>
 
-    <ul class="mt-3 space-y-3 text-[11px]">
-      <li>
+    <div class="mt-4 space-y-4 text-[13px]">
+      <div>
         <p class="text-muted">correo</p>
-        <a
-          [href]="'mailto:' + profile.email"
-          class="mt-0.5 block break-all text-ink underline decoration-accent/50 underline-offset-2 transition-colors hover:decoration-accent"
-        >
-          {{ profile.email }}
-        </a>
-      </li>
-      <li>
+        <div class="mt-1 flex flex-wrap items-center gap-2">
+          <a
+            [href]="'mailto:' + contactEmail"
+            class="break-all text-[13px] text-ink underline decoration-accent/50 underline-offset-2 transition-colors hover:decoration-accent"
+          >
+            {{ contactEmail }}
+          </a>
+          <button
+            type="button"
+            class="focus-ring min-w-[68px] shrink-0 rounded border border-line px-2 py-0.5 text-[13px] text-muted transition-colors duration-150 hover:border-accent/40 hover:text-ink"
+            [attr.aria-label]="copied() ? 'Correo copiado' : 'Copiar correo'"
+            (click)="copyEmail()"
+          >
+            {{ copied() ? 'Copiado' : 'Copiar' }}
+          </button>
+          <span class="sr-only" aria-live="polite">{{ copied() ? 'Correo copiado' : '' }}</span>
+        </div>
+      </div>
+
+      <div>
         <p class="text-muted">ciudad</p>
-        <p class="mt-0.5 text-ink">{{ profile.city }}</p>
-      </li>
-    </ul>
+        <p class="mt-0.5 text-[13px] text-ink">{{ profile.city }}</p>
+      </div>
+    </div>
 
     <div class="mt-6 border-t border-line pt-4">
-      <p class="label-caps">encuéntrame-también-en</p>
+      <p class="label-caps text-[13px] tracking-[0.06em]">encuéntrame-también-en</p>
       <ul class="mt-3 space-y-2">
         @for (link of socials; track link.label) {
           <li>
@@ -32,7 +44,7 @@
               [href]="link.url"
               [attr.target]="link.external ? '_blank' : null"
               [attr.rel]="link.external ? 'noreferrer' : null"
-              class="inline-flex items-center gap-2 text-[11px] text-ink transition-colors duration-150 hover:underline"
+              class="inline-flex items-center gap-2 text-[13px] text-ink transition-colors duration-150 hover:underline"
             >
               <app-icon [name]="link.icon" [size]="14" />
               {{ link.label }}
@@ -42,119 +54,180 @@
       </ul>
     </div>
 
-    <p class="mt-6 text-[10px] leading-5 text-muted">
-      // sin backend por ahora: el formulario prepara el mensaje en tu cliente de correo.
-    </p>
+    <div class="mt-6 space-y-3 border-t border-line pt-4 text-[13px] leading-6 text-muted">
+      <!-- TODO(diego): reemplazar /assets/cv.pdf por el CV final. -->
+      <a href="/assets/cv.pdf" download class="btn btn-ghost w-full text-[13px]">
+        <span aria-hidden="true">↓</span>
+        Descargar CV
+        <span class="text-[13px] text-muted">PDF</span>
+      </a>
+
+      <p>
+        Respondo en
+        <span class="text-muted">// TODO(diego): tiempo de respuesta</span>
+      </p>
+      <p>Solo uso tus datos para responderte.</p>
+    </div>
   </aside>
 
   <div class="editor-window min-w-0 bg-surface">
     <div class="flex items-center justify-between gap-2 border-b border-line bg-surface-2 px-4 py-2">
-      <p class="text-[11px] text-muted"><span class="text-accent">contacto</span>.ts</p>
-      <span class="text-[10px] text-muted">TypeScript · UTF-8</span>
+      <p class="text-[13px] text-muted"><span class="text-accent">contacto</span>.ts</p>
+      <span class="text-[13px] text-muted">TypeScript · UTF-8</span>
     </div>
 
     <div class="p-5 sm:p-8">
-      <p class="text-[11px] text-muted">// escribe el mensaje y el formulario arma el correo</p>
-      <h2 class="mt-3 text-xl font-semibold text-ink sm:text-2xl">Hablemos.</h2>
-      <p class="mt-2 max-w-lg text-xs leading-6 text-muted">
+      <p class="mx-auto max-w-xl text-[13px] text-muted">// escribe el mensaje y te respondo por correo</p>
+      <h2 class="mx-auto mt-3 max-w-xl text-xl font-semibold text-ink sm:text-2xl">Hablemos.</h2>
+      <p class="mx-auto mt-2 max-w-xl text-[13px] leading-6 text-muted">
         Cuéntame del proyecto, la práctica o la idea. Los campos con
         <span class="text-muted">*</span> son obligatorios.
       </p>
 
-      @if (sent()) {
-        <div class="mt-6 max-w-xl rounded-md border border-accent/30 bg-accent/5 p-4" role="status">
-          <p class="text-[11px] text-accent">// mensaje listo</p>
-          <p class="mt-2 text-sm leading-6 text-ink">
-            El correo quedó preparado. Ábrelo en tu cliente de correo para enviarlo.
-          </p>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <a [href]="mailtoHref()" class="btn btn-accent">
-              abrir-correo <span aria-hidden="true">→</span>
-            </a>
-            <button type="button" class="btn btn-ghost" (click)="writeAnother()">
-              escribir-otro
-            </button>
-          </div>
-        </div>
-      }
-
-      <form class="mt-6 max-w-xl space-y-5" [formGroup]="form" (ngSubmit)="send()" novalidate>
+      <form
+        class="mx-auto mt-6 max-w-xl space-y-5"
+        [formGroup]="form"
+        [attr.aria-busy]="estado() === 'enviando'"
+        (ngSubmit)="send()"
+        novalidate
+      >
         <div>
-          <label for="campo-nombre" class="block text-[11px] text-muted">
-            <span class="text-accent">_</span>nombre <span class="text-muted/70">*</span>
+          <label for="campo-nombre" class="block text-[13px] text-muted">
+            <span class="sr-only">Nombre</span>
+            <span aria-hidden="true">
+              <span class="text-accent">_</span>nombre
+              <span class="text-muted/70">*</span>
+            </span>
           </label>
           <input
+            #nombreInput
             id="campo-nombre"
             type="text"
             formControlName="nombre"
             autocomplete="name"
             placeholder="tu nombre"
+            required
             class="field field-inset mt-1.5"
             [class.field-invalid]="showError('nombre')"
-            [attr.aria-invalid]="showError('nombre')"
+            [attr.aria-invalid]="showError('nombre') ? 'true' : null"
             [attr.aria-describedby]="showError('nombre') ? 'error-nombre' : null"
           />
-          @if (showError('nombre')) {
-            <p id="error-nombre" class="mt-1.5 text-[10px] text-error">
-              // mínimo 2 caracteres
-            </p>
+          @if (errorNombre(); as error) {
+            <p id="error-nombre" class="mt-1.5 text-[13px] text-error">{{ error }}</p>
           }
         </div>
 
         <div>
-          <label for="campo-correo" class="block text-[11px] text-muted">
-            <span class="text-accent">_</span>correo <span class="text-muted/70">*</span>
+          <label for="campo-correo" class="block text-[13px] text-muted">
+            <span class="sr-only">Correo</span>
+            <span aria-hidden="true">
+              <span class="text-accent">_</span>correo
+              <span class="text-muted/70">*</span>
+            </span>
           </label>
           <input
+            #correoInput
             id="campo-correo"
             type="email"
             formControlName="correo"
             autocomplete="email"
             placeholder="tu@correo.com"
+            required
             class="field field-inset mt-1.5"
             [class.field-invalid]="showError('correo')"
-            [attr.aria-invalid]="showError('correo')"
+            [attr.aria-invalid]="showError('correo') ? 'true' : null"
             [attr.aria-describedby]="showError('correo') ? 'error-correo' : null"
           />
-          @if (showError('correo')) {
-            <p id="error-correo" class="mt-1.5 text-[10px] text-error">
-              // escribe un correo válido
-            </p>
+          @if (errorCorreo(); as error) {
+            <p id="error-correo" class="mt-1.5 text-[13px] text-error">{{ error }}</p>
           }
         </div>
 
         <div>
-          <label for="campo-mensaje" class="block text-[11px] text-muted">
-            <span class="text-accent">_</span>mensaje <span class="text-muted/70">*</span>
+          <label for="campo-mensaje" class="block text-[13px] text-muted">
+            <span class="sr-only">Mensaje</span>
+            <span aria-hidden="true">
+              <span class="text-accent">_</span>mensaje
+              <span class="text-muted/70">*</span>
+            </span>
           </label>
           <textarea
+            #mensajeInput
             id="campo-mensaje"
             formControlName="mensaje"
             rows="5"
             placeholder="qué tienes en mente..."
+            required
             class="field field-inset mt-1.5 resize-y"
             [class.field-invalid]="showError('mensaje')"
-            [attr.aria-invalid]="showError('mensaje')"
+            [attr.aria-invalid]="showError('mensaje') ? 'true' : null"
             [attr.aria-describedby]="showError('mensaje') ? 'error-mensaje' : null"
           ></textarea>
-          @if (showError('mensaje')) {
-            <p id="error-mensaje" class="mt-1.5 text-[10px] text-error">
-              // mínimo 10 caracteres
-            </p>
+          @if (errorMensaje(); as error) {
+            <p id="error-mensaje" class="mt-1.5 text-[13px] text-error">{{ error }}</p>
           }
         </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
-          <p class="text-[10px] text-muted">// el botón se activa cuando todo está bien</p>
+        <div class="flex justify-end border-t border-line pt-4">
           <button
             type="submit"
-            class="btn btn-accent disabled:cursor-not-allowed disabled:opacity-40"
-            [disabled]="form.invalid"
+            class="btn btn-solid-accent text-[13px] disabled:cursor-wait disabled:opacity-60"
+            [disabled]="estado() === 'enviando'"
           >
-            enviar-mensaje <span aria-hidden="true">→</span>
+            {{ estado() === 'enviando' ? 'enviando...' : 'enviar-mensaje' }}
+            @if (estado() !== 'enviando') {
+              <span aria-hidden="true">→</span>
+            }
           </button>
         </div>
+
+        <div
+          class="pointer-events-none absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+          aria-hidden="true"
+        >
+          <label for="campo-website">No completar este campo</label>
+          <input
+            id="campo-website"
+            type="text"
+            formControlName="website"
+            tabindex="-1"
+            aria-hidden="true"
+            autocomplete="off"
+          />
+        </div>
       </form>
+
+      @if (estado() === 'enviando') {
+        <p class="mx-auto mt-6 max-w-xl text-[13px] text-muted" role="status" aria-live="polite">
+          Enviando mensaje...
+        </p>
+      }
+
+      @if (estado() === 'ok') {
+        <div
+          class="mx-auto mt-6 max-w-xl rounded-md border border-accent/30 bg-accent/5 p-4 text-[13px]"
+          role="status"
+          aria-live="polite"
+        >
+          <p class="leading-6 text-ink">Mensaje enviado. Te respondo pronto.</p>
+        </div>
+      }
+
+      @if (estado() === 'error') {
+        <div
+          class="mx-auto mt-6 max-w-xl rounded-md border border-error/30 bg-error/5 p-4 text-[13px]"
+          role="status"
+          aria-live="polite"
+        >
+          <p class="leading-6 text-ink">
+            No se pudo enviar. Escríbeme a
+            <a
+              [href]="'mailto:' + contactEmail"
+              class="underline decoration-error/50 underline-offset-2 transition-colors hover:decoration-error"
+            >{{ contactEmail }}</a>
+          </p>
+        </div>
+      }
     </div>
   </div>
 </section>

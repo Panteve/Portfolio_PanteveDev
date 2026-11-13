@@ -1,7 +1,13 @@
 <article
-  class="group relative flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface-2 shadow-[0_18px_40px_-30px_rgba(0,0,0,0.85)] transition duration-200 hover:border-accent/35 hover:shadow-[0_26px_50px_-28px_rgba(0,0,0,0.95)]"
+  class="project-card group relative flex h-full flex-col overflow-hidden rounded-lg border border-line bg-panel"
+  [style.--project-rgb]="colorVar()"
   [ngClass]="{ 'lg:flex-row': project().featured }"
 >
+  <span
+    class="project-card-topline pointer-events-none absolute inset-x-0 top-0 z-20 h-0.5"
+    aria-hidden="true"
+  ></span>
+
   <div
     class="relative w-full overflow-hidden border-b border-line"
     [ngClass]="
@@ -16,7 +22,7 @@
   <div class="flex flex-1 flex-col gap-3 p-4 sm:p-5">
     <div class="flex items-start justify-between gap-3">
       <h3 class="text-sm font-medium leading-6">
-        <span class="text-accent">proyecto {{ indexLabel() }}</span>
+        <span class="project-accent">proyecto {{ indexLabel() }}</span>
         <span class="text-muted"> // </span>
         <span class="text-ink">{{ project().name }}</span>
       </h3>
@@ -36,12 +42,12 @@
       }
     </div>
 
-    <div class="mt-auto flex items-center justify-between gap-3 border-t border-line pt-3">
-      <span class="text-[13px] text-muted">
+    <div class="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-line pt-3">
+      <span class="whitespace-nowrap text-[13px] text-muted">
         {{ project().origen }} <span aria-hidden="true">·</span> {{ project().anio }}
       </span>
       <span
-        class="btn btn-ghost text-[13px] group-hover:border-accent/40 group-hover:text-accent"
+        class="project-card-cta btn btn-ghost ml-auto whitespace-nowrap text-[13px]"
       >
         ver-proyecto <span aria-hidden="true">→</span>
       </span>
@@ -51,6 +57,6 @@
   <a
     [routerLink]="['/proyectos', project().id]"
     [attr.aria-label]="'ver-proyecto: ' + project().name"
-    class="absolute inset-0 z-10 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
+    class="project-card-link absolute inset-0 z-10 rounded-lg"
   ></a>
 </article>

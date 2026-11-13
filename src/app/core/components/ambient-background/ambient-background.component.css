@@ -19,7 +19,8 @@
   top: 0;
   left: 0;
   border-radius: 50%;
-  will-change: transform;
+  filter: blur(22px);
+  will-change: transform, translate;
 }
 
 /* Azul: sigue al cursor. Violeta: siempre en el punto espejo del viewport. */
@@ -27,20 +28,55 @@
   width: 78vmax;
   height: 78vmax;
   margin: -39vmax 0 0 -39vmax;
-  background: radial-gradient(circle, rgb(var(--accent) / 0.15), transparent 62%);
+  background: radial-gradient(circle, rgb(var(--accent) / 0.2), transparent 62%);
   transform: translate3d(var(--glow-x), var(--glow-y), 0);
+  animation: drift-blue 28s ease-in-out infinite alternate;
 }
 
 .glow-violet {
   width: 86vmax;
   height: 86vmax;
   margin: -43vmax 0 0 -43vmax;
-  background: radial-gradient(circle, rgb(var(--accent-2) / 0.14), transparent 64%);
+  background: radial-gradient(circle, rgb(var(--accent-2) / 0.18), transparent 64%);
   transform: translate3d(
     calc(var(--viewport-w) - var(--glow-x)),
     calc(var(--viewport-h) - var(--glow-y)),
     0
   );
+  animation: drift-violet 36s ease-in-out infinite alternate;
+}
+
+:host-context([data-theme='light']) .glow-blue {
+  background: radial-gradient(circle, rgb(var(--accent) / 0.1), transparent 62%);
+}
+
+:host-context([data-theme='light']) .glow-violet {
+  background: radial-gradient(circle, rgb(var(--accent-2) / 0.09), transparent 64%);
+}
+
+@keyframes drift-blue {
+  from {
+    translate: -2vmax 1vmax;
+  }
+  to {
+    translate: 3vmax -2vmax;
+  }
+}
+
+@keyframes drift-violet {
+  from {
+    translate: 2vmax -1vmax;
+  }
+  to {
+    translate: -3vmax 2vmax;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow {
+    animation: none;
+    translate: 0 0;
+  }
 }
 
 /* Grano estático: textura sutil sin coste por frame. */

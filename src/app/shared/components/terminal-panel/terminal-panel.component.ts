@@ -12,7 +12,7 @@ export interface TerminalLine {
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <section
-      class="terminal-panel flex flex-col overflow-hidden border-t border-line bg-surface-0"
+      class="terminal-panel flex flex-col overflow-hidden border-t border-line bg-surface-0 font-mono"
       [class.terminal-panel-collapsed]="!open()"
       aria-label="Panel inferior: terminal"
     >

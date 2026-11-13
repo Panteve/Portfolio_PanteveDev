@@ -3,7 +3,7 @@
 
   <div class="grid flex-1 grid-cols-1 lg:grid-cols-[212px_minmax(0,1fr)]">
     <!-- Filtros de escritorio -->
-    <aside class="hidden border-r border-line bg-surface-0 lg:block" aria-labelledby="filtros-titulo">
+    <aside class="hidden border-r border-line bg-side lg:block" aria-labelledby="filtros-titulo">
       <div class="lg:sticky lg:top-12">
         <div class="border-b border-line px-4 py-2.5">
           <h2 id="filtros-titulo" class="label-caps text-[13px]">proyectos</h2>
@@ -23,9 +23,9 @@
       </div>
     </aside>
 
-    <div class="editor-window min-w-0 bg-surface">
+    <div class="editor-window min-w-0 bg-editor">
       <!-- Filtros en desplegable (móvil) -->
-      <details class="group border-b border-line bg-surface-0 lg:hidden">
+      <details class="group border-b border-line bg-side lg:hidden">
         <summary
           class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[13px] text-ink"
         >
@@ -55,7 +55,7 @@
 
       <!-- Barra de pestaña del editor -->
       <div
-        class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-surface-2 px-4 py-2"
+        class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-panel px-4 py-2"
       >
         <p class="min-w-0 truncate text-[13px]">
           <span class="text-accent">filtro</span>
@@ -65,7 +65,7 @@
         <p class="shrink-0 text-[13px] text-muted">{{ resultsLabel() }}</p>
       </div>
 
-      <div class="p-4 sm:p-5">
+      <div appCursorGlow class="projects-stage relative p-4 sm:p-5">
         <h2 class="sr-only">Proyectos filtrados</h2>
         @if (filteredProjects().length) {
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -74,7 +74,7 @@
             }
           </div>
         } @else {
-          <div class="rounded-md border border-dashed border-line bg-surface-2/40 px-6 py-16 text-center">
+          <div class="rounded-md border border-dashed border-line bg-panel/40 px-6 py-16 text-center">
             <p class="text-[13px] text-muted">// ningún proyecto coincide con los filtros</p>
             <button
               type="button"

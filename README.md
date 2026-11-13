@@ -5,7 +5,7 @@ Todo el contenido vive en archivos de datos tipados; las vistas solo se encargan
 
 - **Framework:** Angular 22 (standalone components, signals, `@if` / `@for`).
 - **Estilos:** Tailwind CSS 3.4, sin librerías de UI ni de animación.
-- **Idioma:** español. **Tema:** solo oscuro. **Tipografía:** JetBrains Mono.
+- **Idioma:** español. **Tema:** claro y oscuro. **Tipografía:** Geist (UI) y JetBrains Mono (código).
 - **Estado:** responsive en 360, 768 y 1280 px; sin errores de consola.
 
 ## Requisitos
@@ -29,7 +29,7 @@ npm run build      # build de producción en dist/portfolio
 | `/sobre-mi`             | Explorador de archivos, editor con líneas numeradas y snippets. |
 | `/proyectos`            | Filtros técnicos y grid de proyectos.                        |
 | `/proyectos/:id`        | Detalle del proyecto (POS multisucursal incluido).           |
-| `/contacto`             | Formulario reactivo con validación y estado de éxito.        |
+| `/contacto`             | Formulario reactivo con envío real (Vercel + Resend).        |
 
 Las rutas se cargan de forma diferida (`loadComponent`) y cada una actualiza el título y la
 meta descripción mediante `SeoService`. La ruta comodín redirige a `/`.
@@ -90,6 +90,29 @@ El build genera una SPA con rutas limpias, así que el hosting debe redirigir to
 - **GitHub Pages:** funciona solo en la raíz del dominio. En un subdirectorio hay que compilar con
   `ng build --base-href /nombre-del-repo/` y resolver el fallback de rutas (por ejemplo, copiando
   `index.html` a `404.html`). Para este proyecto es más simple Netlify, Cloudflare Pages o Vercel.
+
+## Contacto (Vercel + Resend)
+
+El formulario de `_contacto` envía un `POST` a `/api/contact` (función serverless en `api/contact.ts`). Esa función valida el mensaje y lo envía por correo con Resend.
+
+### Variables de entorno
+
+Configura estas variables en el proyecto de Vercel (Settings → Environment Variables):
+
+- `RESEND_API_KEY`: clave de API de Resend.
+- `CONTACT_TO_EMAIL`: correo donde quieres recibir los mensajes.
+
+Para desarrollo local, crea un `.env` a partir de `.env.example`. No subas `.env` al repositorio.
+
+### Probar en local
+
+`ng serve` no ejecuta la carpeta `/api`; el formulario solo puede enviar mensajes cuando hay un servidor que exponga la función. Para probarlo en local se usa `vercel dev` (requiere la CLI de Vercel; instálala por tu cuenta si no la tienes). La CLI lee las variables del `.env` y sirve la SPA y `/api/contact` en la misma URL.
+
+### Deploy
+
+Despliega el proyecto en Vercel. `vercel.json` mantiene el build de Angular y excluye `/api` del rewrite de la SPA. Configura las variables de entorno en Vercel antes de probar el formulario.
+
+Nota: el remitente de la función es `onboarding@resend.dev`, el dominio de pruebas de Resend. Para producción, verifica un dominio en Resend y actualiza el `from` en `api/contact.ts`.
 
 ## Pendientes (TODO)
 

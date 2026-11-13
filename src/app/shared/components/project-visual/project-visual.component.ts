@@ -1,14 +1,5 @@
 import { Component, computed, input, ChangeDetectionStrategy } from '@angular/core';
-import { Project, ProjectTone } from '../../../data/projects';
-
-const TONE_CLASSES: Record<ProjectTone, string> = {
-  teal: 'from-accent/30 via-accent/10 to-transparent',
-  violet: 'from-accent-2/30 via-accent-2/10 to-transparent',
-  amber: 'from-warm/30 via-warm/10 to-transparent',
-  rose: 'from-accent-2/25 via-accent-2/10 to-transparent',
-  sky: 'from-accent/25 via-accent/10 to-transparent',
-  lime: 'from-green/25 via-green/10 to-transparent',
-};
+import { Project } from '../../../data/projects';
 
 @Component({
   selector: 'app-project-visual',
@@ -23,8 +14,11 @@ const TONE_CLASSES: Record<ProjectTone, string> = {
         class="h-full w-full object-cover"
       />
     } @else {
-      <div class="relative flex h-full w-full flex-col overflow-hidden bg-bg">
-        <div [class]="'absolute inset-0 bg-gradient-to-br ' + toneClass()"></div>
+      <div
+        class="relative flex h-full w-full flex-col overflow-hidden bg-editor"
+        [style.--project-rgb]="colorVar()"
+      >
+        <div class="project-visual-tint absolute inset-0" aria-hidden="true"></div>
         <div
           class="absolute inset-0 opacity-[0.18]"
           style="background-image: linear-gradient(to right, rgb(var(--text) / 0.3) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--text) / 0.3) 1px, transparent 1px); background-size: 22px 22px"
@@ -51,9 +45,16 @@ const TONE_CLASSES: Record<ProjectTone, string> = {
       </div>
     }
   `,
+  styles: `
+    .project-visual-tint {
+      background:
+        radial-gradient(circle at 24% 14%, rgb(var(--project-rgb) / 0.28), transparent 58%),
+        linear-gradient(135deg, rgb(var(--project-rgb) / 0.1), transparent 62%);
+    }
+  `,
 })
 export class ProjectVisualComponent {
   readonly project = input.required<Project>();
 
-  protected readonly toneClass = computed(() => TONE_CLASSES[this.project().tone]);
+  protected readonly colorVar = computed(() => `var(--${this.project().color})`);
 }

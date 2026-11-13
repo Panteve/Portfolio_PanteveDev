@@ -14,14 +14,21 @@
     --surface-0: 22 22 30;
     --surface: 31 35 53;
     --surface-2: 36 40 59;
+    --bg-side: 22 22 30;
+    --bg-editor: 31 35 53;
+    --bg-panel: 36 40 59;
     --border: 59 66 82;
     --line-alpha: 0.85;
-    --text: 192 202 245;
+    --text: 255 255 255;
     --text-muted: 169 177 214;
     --accent: 122 162 247;
     --accent-2: 187 154 247;
     --warm: 255 158 100;
+    --orange: 255 158 100;
     --green: 158 206 106;
+    --teal: 115 218 202;
+    --cyan: 125 207 255;
+    --red: 247 118 142;
     --error: 255 158 100;
     --syntax-key: 122 162 247;
     --syntax-boolean: 158 206 106;
@@ -38,6 +45,9 @@
     --surface-0: 208 213 227;
     --surface: 244 245 249;
     --surface-2: 244 245 249;
+    --bg-side: 208 213 227;
+    --bg-editor: 244 245 249;
+    --bg-panel: 225 226 231;
     --border: 52 59 88;
     --line-alpha: 0.15;
     --text: 31 42 82;
@@ -45,7 +55,11 @@
     --accent: 42 91 208;
     --accent-2: 122 63 208;
     --warm: 143 75 0;
+    --orange: 143 75 0;
     --green: 74 101 48;
+    --teal: 0 101 127;
+    --cyan: 0 95 135;
+    --red: 184 18 56;
     --error: 184 18 56;
     --syntax-key: 0 101 127;
     --syntax-boolean: 74 101 48;
@@ -65,13 +79,12 @@
   body {
     min-height: 100%;
     font-family:
-      'JetBrains Mono',
-      'Fira Code',
-      ui-monospace,
-      SFMono-Regular,
-      Menlo,
-      Consolas,
-      monospace;
+      'Geist',
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      sans-serif;
     background-color: rgb(var(--bg));
     color: rgb(var(--text));
     font-size: 14px;
@@ -138,8 +151,16 @@
 
 /* En los paneles #d0d5e3 el muted original (#565f89) queda en 4.22:1.
    Se oscurece mínimamente para superar 4.5:1 sin tocar los comentarios del editor. */
-[data-theme='light'] .bg-surface-0:not(.terminal-panel) {
+[data-theme='light'] .bg-surface-0:not(.terminal-panel),
+[data-theme='light'] .bg-side:not(.terminal-panel) {
   --text-muted: 81 90 132;
+}
+
+/* El modo Vista (README y resto de archivos) usa texto blanco sobre el
+   editor oscuro. En tema claro conserva sus tokens para mantener el
+   contraste sobre el fondo claro. */
+[data-theme='dark'] .doc-view {
+  --text-muted: 255 255 255;
 }
 
 @layer components {
@@ -149,7 +170,12 @@
 
   .tab-link-active {
     @apply bg-ink/[0.06] text-ink;
-    box-shadow: 0 0 22px -12px rgb(var(--accent) / 0.55);
+  }
+
+  .tab-link-active:focus-visible {
+    box-shadow:
+      inset 0 0 0 1px rgb(var(--accent) / 0.4),
+      0 0 22px -12px rgb(var(--accent) / 0.55);
   }
 
   .tab-link-active::after {
@@ -182,6 +208,10 @@
     @apply border-accent/40 bg-accent/10 text-accent hover:bg-accent/20 active:bg-accent/25;
   }
 
+  .btn-solid-accent {
+    @apply border-accent bg-accent text-bg hover:shadow-[0_0_22px_-6px_rgb(var(--accent)/0.65)] active:translate-y-px;
+  }
+
   [data-theme='light'] .btn-accent,
   [data-theme='light'] .btn-warm {
     @apply text-ink;
@@ -210,11 +240,25 @@
 
   /* Formulario ------------------------------------------------------------- */
   .field {
-    @apply w-full rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink transition duration-150 placeholder:text-muted focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/40;
+    @apply w-full rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink transition duration-150 placeholder:text-muted focus:outline-none;
+  }
+
+  .field:focus {
+    border-color: rgb(var(--accent));
+    box-shadow:
+      0 0 0 1px rgb(var(--accent) / 0.35),
+      0 0 22px -8px rgb(var(--accent) / 0.55);
   }
 
   .field-invalid {
-    @apply border-error/50 focus:border-error focus:ring-error/30;
+    @apply border-error/50;
+  }
+
+  .field-invalid:focus {
+    border-color: rgb(var(--error));
+    box-shadow:
+      0 0 0 1px rgb(var(--error) / 0.35),
+      0 0 22px -8px rgb(var(--error) / 0.5);
   }
 
   .field-inset {

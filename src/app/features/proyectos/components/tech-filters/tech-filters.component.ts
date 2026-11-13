@@ -44,7 +44,7 @@ export class TechFiltersComponent {
       'flex cursor-pointer items-center gap-2 rounded px-1.5 py-1.5 text-[13px] text-muted transition-colors duration-150 hover:bg-ink/5 hover:text-ink';
 
     return this.isTypeActive(type)
-      ? `${base} bg-accent/10 text-ink ring-1 ring-inset ring-accent/20 shadow-[0_0_16px_-10px_rgba(122,162,247,0.55)]`
+      ? `${base} bg-accent/10 text-ink ring-1 ring-inset ring-accent/40 shadow-[0_0_16px_-10px_rgba(122,162,247,0.55)]`
       : base;
   }
 
@@ -53,7 +53,7 @@ export class TechFiltersComponent {
       'flex cursor-pointer items-center gap-2 rounded px-1.5 py-1 text-[13px] text-muted transition-colors duration-150 hover:bg-ink/5 hover:text-ink';
 
     return this.isActive(name)
-      ? `${base} bg-accent/10 text-ink ring-1 ring-inset ring-accent/20 shadow-[0_0_16px_-10px_rgba(122,162,247,0.55)]`
+      ? `${base} bg-accent/10 text-ink ring-1 ring-inset ring-accent/40 shadow-[0_0_16px_-10px_rgba(122,162,247,0.55)]`
       : base;
   }
 
