@@ -1,10 +1,10 @@
 const MAX_BODY = 10_000;
 
-function json(body: unknown, status = 200) {
+function json(body, status = 200) {
   return Response.json(body, { status });
 }
 
-export async function POST(request: Request) {
+export async function POST(request) {
   const apiKey = process.env.RESEND_API_KEY;
   const destino = process.env.CONTACT_TO_EMAIL;
   if (!apiKey || !destino) {
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   const raw = await request.text();
   if (raw.length > MAX_BODY) return json({ ok: false, error: 'too_large' }, 413);
 
-  let data: any;
+  let data;
   try {
     data = JSON.parse(raw);
   } catch {

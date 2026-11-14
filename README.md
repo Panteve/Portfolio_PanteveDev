@@ -93,7 +93,7 @@ El build genera una SPA con rutas limpias, así que el hosting debe redirigir to
 
 ## Contacto (Vercel + Resend)
 
-El formulario de `_contacto` envía un `POST` a `/api/contact` (función serverless en `api/contact.ts`). Esa función valida el mensaje y lo envía por correo con Resend.
+El formulario de `_contacto` envía un `POST` a `/api/contact` (función serverless en `api/contact.mjs`). Esa función valida el mensaje y lo envía por correo con Resend.
 
 ### Variables de entorno
 
@@ -112,7 +112,7 @@ Para desarrollo local, crea un `.env` a partir de `.env.example`. No subas `.env
 
 Despliega el proyecto en Vercel. `vercel.json` mantiene el build de Angular y excluye `/api` del rewrite de la SPA. Configura las variables de entorno en Vercel antes de probar el formulario.
 
-Nota: el remitente de la función es `onboarding@resend.dev`, el dominio de pruebas de Resend. Para producción, verifica un dominio en Resend y actualiza el `from` en `api/contact.ts`.
+Nota: el remitente de la función es `onboarding@resend.dev`, el dominio de pruebas de Resend. Para producción, verifica un dominio en Resend y actualiza el `from` en `api/contact.mjs`.
 
 ## Pendientes (TODO)
 
